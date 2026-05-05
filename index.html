@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redfinger Auto Check-in - Fast & Reliable</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
+    .container { max-width: 800px; margin: auto; background: #1e2937; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    h1 { text-align: center; color: #60a5fa; }
+    input, button, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; }
+    input, select { background: #334155; color: white; }
+    button { background: #3b82f6; color: white; font-size: 18px; cursor: pointer; }
+    button:hover { background: #2563eb; }
+    .step { background: #1e2937; padding: 15px; border-radius: 8px; margin: 15px 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🚀 Redfinger Auto Check-in</h1>
+    <p style="text-align:center;">Get thousands of days checked-in automatically</p>
+
+    <div class="step">
+      <h2>Step 1: Install Userscript (One-time)</h2>
+      <a href="https://github.com/YOURUSERNAME/redfinger-userscript/raw/main/redfinger-capture.user.js" target="_blank">
+        <button>Install Tampermonkey Script</button>
+      </a>
+      <p><small>Works on Android (Kiwi/Firefox) & iPhone (Userscripts app)</small></p>
+    </div>
+
+    <div class="step">
+      <h2>Step 2: Login to Redfinger</h2>
+      <a href="https://www.cloudemulator.net/" target="_blank">
+        <button>Open Redfinger & Login with Gmail</button>
+      </a>
+    </div>
+
+    <div class="step">
+      <h2>Step 3: Fill Your Details</h2>
+      <input type="text" id="customer" placeholder="Your Name or Nickname" required>
+      <input type="text" id="days" placeholder="How many days? (e.g. 2000)" value="2000" required>
+      
+      <select id="vip">
+        <option value="Normal">Normal VIP</option>
+        <option value="KVIP">KVIP</option>
+        <option value="SVIP" selected>SVIP</option>
+        <option value="XVIP">XVIP</option>
+      </select>
+
+      <button onclick="submitOrder()">🚀 Start Auto Check-in</button>
+    </div>
+
+    <p id="status" style="text-align:center; margin-top:20px;"></p>
+  </div>
+
+  <script>
+    async function submitOrder() {
+      const customer = document.getElementById('customer').value;
+      const days = document.getElementById('days').value;
+      const vip = document.getElementById('vip').value;
+
+      if (!customer) {
+        alert("Please enter your name");
+        return;
+      }
+
+      document.getElementById('status').innerHTML = "✅ Order received! We'll process it soon.";
+
+      // Send to your Telegram bot (replace with your bot token & chat ID)
+      const botToken = "YOUR_BOT_TOKEN_HERE";
+      const chatId = "YOUR_CHAT_ID_HERE";
+
+      const message = `🆕 New Order!\n\nName: ${customer}\nDays: ${days}\nVIP: ${vip}`;
+
+      try {
+        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
+      } catch(e) {}
+    }
+  </script>
+</body>
+</html>
