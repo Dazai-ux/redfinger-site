@@ -97,30 +97,28 @@
 
   <script>
     const BOT_TOKEN = "8758270440:AAEdUvBIKpGqhu0CzsLcOV3oQnwRP7c25jI";
-    const CHAT_ID = "YOUR_CHAT_ID_HERE";   // ← You still need to put your Chat ID
+    const CHAT_ID = "6598357465";
 
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim() || "Anonymous";
       const days = document.getElementById('days').value;
       const vip = document.getElementById('vip').value;
 
-      // Show success message
+      // Show success message on website
       const statusDiv = document.createElement('div');
       statusDiv.className = 'status';
       statusDiv.style.background = '#22c55e';
       statusDiv.style.color = 'black';
-      statusDiv.innerHTML = `✅ Order Received Successfully!<br><strong>${customer}</strong> — ${days} days of ${vip}`;
+      statusDiv.innerHTML = `✅ Order Received Successfully!<br><strong>${customer}</strong> — ${days} days of ${vip}<br>We'll start processing now.`;
       document.body.appendChild(statusDiv);
 
-      // Send to Telegram
+      // Send notification to your Telegram
       const message = `🆕 *New Redfinger Order!*\n\n👤 Customer: ${customer}\n📅 Days: ${days}\n⭐ VIP Level: ${vip}\n⏰ Time: ${new Date().toLocaleString()}`;
 
       try {
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`);
         console.log("✅ Order sent to Telegram");
-      } catch(e) {
-        console.log("Telegram notification sent");
-      }
+      } catch(e) {}
     }
   </script>
 </body>
