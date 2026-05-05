@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+    
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background: linear-gradient(135deg, #0a0f1c 0%, #1e2a5e 100%);
@@ -57,6 +58,7 @@
       font-size: 1.1rem;
     }
     textarea { height: 160px; font-family: monospace; resize: vertical; }
+
     button {
       width: 100%;
       padding: 20px;
@@ -95,14 +97,41 @@
       display: none;
     }
 
-    /* Rest of your styles remain the same */
-    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 30px 0; }
-    .price-card { background: linear-gradient(145deg, #1e2937, #334155); border-radius: 20px; padding: 25px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: all 0.4s; }
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .price-card {
+      background: linear-gradient(145deg, #1e2937, #334155);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.4s;
+    }
     .price-card:hover { transform: translateY(-10px); border-color: #60a5fa; }
     .price-card.active { border-color: #22c55e; box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); transform: scale(1.05); }
+
     .days-options { display: flex; gap: 12px; margin: 15px 0; }
-    .day-btn { flex: 1; padding: 14px; background: #334155; border: 2px solid #475569; border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.3s; font-weight: 600; }
-    .day-btn.active { background: #22c55e; color: black; border-color: #86efac; }
+    .day-btn {
+      flex: 1;
+      padding: 14px;
+      background: #334155;
+      border: 2px solid #475569;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+    .day-btn.active {
+      background: #22c55e;
+      color: black;
+      border-color: #86efac;
+    }
   </style>
 </head>
 <body>
@@ -122,11 +151,22 @@
       <!-- Price Plans -->
       <h2 style="text-align:center; margin:40px 0 25px;">💎 Choose Your VIP Plan</h2>
       <div class="price-grid" id="priceGrid">
-        <!-- Your price cards (unchanged) -->
-        <div class="price-card" data-plan="VIP"><h3>VIP</h3><p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p></div>
-        <div class="price-card" data-plan="KVIP"><h3>KVIP</h3><p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p></div>
-        <div class="price-card" data-plan="SVIP"><h3>SVIP</h3><p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p></div>
-        <div class="price-card" data-plan="XVIP"><h3>XVIP</h3><p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p></div>
+        <div class="price-card" data-plan="VIP">
+          <h3>VIP</h3>
+          <p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p>
+        </div>
+        <div class="price-card" data-plan="KVIP">
+          <h3>KVIP</h3>
+          <p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p>
+        </div>
+        <div class="price-card" data-plan="SVIP">
+          <h3>SVIP</h3>
+          <p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p>
+        </div>
+        <div class="price-card" data-plan="XVIP">
+          <h3>XVIP</h3>
+          <p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p>
+        </div>
       </div>
 
       <!-- Step 2: Order -->
@@ -140,15 +180,17 @@
           <option value="SVIP" selected>SVIP</option>
           <option value="XVIP">XVIP</option>
         </select>
+        
         <label style="display:block; margin:15px 0 8px; font-weight:600;">Select Duration:</label>
         <div class="days-options" id="daysOptions">
           <div class="day-btn active" data-days="7">7 Days</div>
           <div class="day-btn" data-days="30">30 Days</div>
           <div class="day-btn" data-days="90">90 Days</div>
         </div>
+        
         <textarea id="note" placeholder="Additional notes (optional)"></textarea>
 
-        <!-- New Upload Section -->
+        <!-- Receipt Upload -->
         <h3 style="margin:20px 0 10px;">📸 Upload Payment Receipt (Optional)</h3>
         <div class="upload-area" id="uploadArea">
           <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #60a5fa; margin-bottom:10px;"></i>
@@ -160,15 +202,21 @@
         <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
       </div>
 
-      <!-- Payment Info -->
+      <!-- Step 3: Payment -->
       <div class="step">
         <h2 style="text-align:center;">💰 Step 3: Payment via GCash</h2>
-        <div class="qr-container" style="text-align:center; background:white; padding:20px; border-radius:16px; margin:20px auto; width:fit-content;">
-          <img src="https://imgur.com/a/CEiIlmX" alt="GCash QR Code" width="300">
+        
+        <div style="text-align:center; margin:25px 0;">
+          <p style="font-size:1.1rem; margin-bottom:15px;">Scan the QR Code below</p>
+          <img src="https://i.imgur.com/SnIB5Dt.jpeg" 
+               alt="GCash QR Code" 
+               style="max-width: 320px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         </div>
-        <div style="text-align:center;">
-          <strong style="font-size:1.4rem;">0994 6461 806</strong> <small>(E.R)</small><br>
-          <small>Send exact amount + your name in reference</small>
+
+        <div style="text-align:center; background: rgba(15,23,42,0.8); padding: 20px; border-radius: 16px;">
+          <strong style="font-size:1.6rem; color:#4ade80;">0994 6461 806</strong> 
+          <small style="color:#94a3b8;">(E.R)</small><br><br>
+          <small>Send the <strong>exact amount</strong> + your name in the reference/note</small>
         </div>
       </div>
 
@@ -184,7 +232,7 @@
     let selectedDays = "30";
     let selectedFile = null;
 
-    // Price cards & days (unchanged)
+    // Price cards
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -194,6 +242,7 @@
       });
     });
 
+    // Days buttons
     document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -266,16 +315,13 @@
                         `${note ? `📝 Note: ${note}\n\n` : ''}` +
                         `⏰ ${new Date().toLocaleString()}`;
 
-      // Send text first
       await sendToTelegram(orderText);
 
-      // Send photo if uploaded
       if (selectedFile) {
         const photoCaption = `📸 Payment Receipt from ${customer} (${vip} - ${selectedDays} Days)`;
         await sendPhotoToTelegram(selectedFile, photoCaption);
       }
 
-      // Success message
       document.getElementById('result').innerHTML = `
         <div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:30px; border-radius:16px; text-align:center;">
           ✅ <strong>Order & Receipt Received Successfully!</strong><br><br>
