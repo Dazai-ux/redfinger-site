@@ -8,201 +8,202 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-    :root {
-      --primary: #3b82f6;
-      --dark: #0f172a;
-      --card: #1e2937;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
-      color: #e2e8f0;
+      background: linear-gradient(135deg, #0a1428 0%, #1e3a8a 100%);
+      color: #e0f2fe;
       min-height: 100vh;
       padding: 20px;
     }
 
     .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background: var(--card);
+      max-width: 1200px;
+      margin: 30px auto;
+      background: rgba(15, 23, 42, 0.95);
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+      border: 1px solid #60a5fa;
     }
 
     .header {
       background: linear-gradient(90deg, #1e40af, #3b82f6);
-      padding: 40px 30px;
+      padding: 40px 20px;
       text-align: center;
       color: white;
     }
 
     .header h1 {
       font-size: 2.8rem;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    .header p {
-      font-size: 1.2rem;
-      opacity: 0.9;
+    .pricing-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin: 30px 0 20px;
+      color: #93c5fd;
+      text-shadow: 0 0 10px #3b82f6;
     }
 
-    .content {
-      padding: 40px 30px;
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 30px 40px;
     }
 
-    .step {
-      background: #334155;
-      padding: 25px;
+    .vip-card {
+      background: linear-gradient(180deg, #1e2937, #0f172a);
       border-radius: 16px;
-      margin-bottom: 25px;
-      border-left: 5px solid var(--primary);
+      padding: 20px;
+      text-align: center;
+      border: 2px solid #334155;
+      transition: all 0.4s;
     }
 
-    .step h3 {
-      color: #60a5fa;
-      margin-bottom: 15px;
-      font-size: 1.3rem;
+    .vip-card:hover {
+      transform: translateY(-10px);
+      border-color: #60a5fa;
+      box-shadow: 0 0 25px rgba(96, 165, 250, 0.4);
     }
 
-    input, select {
-      width: 100%;
-      padding: 16px;
-      background: #1e2937;
-      border: 2px solid #475569;
-      border-radius: 12px;
-      color: white;
-      font-size: 1.1rem;
+    .vip-card h3 {
+      font-size: 1.6rem;
       margin: 10px 0;
+      color: #bae6fd;
     }
 
-    input:focus, select:focus {
-      border-color: var(--primary);
-      outline: none;
+    .price {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #67e8f9;
+      margin: 15px 0;
+    }
+
+    .days {
+      background: #1e40af;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 30px;
+      display: inline-block;
+      margin: 10px 0;
+      font-weight: 600;
+    }
+
+    .best {
+      background: #eab308;
+      color: black;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
     }
 
     button {
       width: 100%;
-      padding: 18px;
+      padding: 14px;
       background: linear-gradient(90deg, #3b82f6, #60a5fa);
       color: white;
-      font-size: 1.3rem;
-      font-weight: 600;
       border: none;
       border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
       cursor: pointer;
       margin-top: 15px;
-      transition: all 0.3s;
     }
 
     button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+      background: linear-gradient(90deg, #2563eb, #3b82f6);
     }
 
-    .status {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 1.1rem;
-      padding: 15px;
-      border-radius: 12px;
-    }
-
-    .badge {
-      display: inline-block;
-      background: #22c55e;
-      color: black;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      margin: 10px 5px;
+    .features {
+      margin: 20px 0;
+      text-align: left;
+      line-height: 2;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
     <div class="header">
-      <h1>🚀 Redfinger Auto Check-in</h1>
-      <p>Fast • Reliable • 24/7 Automated Farming</p>
-      <div style="margin-top: 15px;">
-        <span class="badge">✅ 99.8% Success Rate</span>
-        <span class="badge">⚡ Instant Start</span>
-        <span class="badge">🔒 Secure</span>
-      </div>
+      <h1>🚀 REDFINGER AUTO CHECK-IN</h1>
+      <p>Automated VIP Farming Service • Fast & Reliable</p>
     </div>
 
-    <div class="content">
+    <h2 class="pricing-title">OFFICIAL VIP PRICE LIST</h2>
 
-      <!-- Step 1 -->
-      <div class="step">
-        <h3><i class="fas fa-plug"></i> Step 1: Install Capture Tool (One Time)</h3>
-        <p style="margin-bottom: 15px;">Install our Tampermonkey script to send credentials automatically (no F12 needed)</p>
+    <div class="pricing-grid">
+
+      <!-- Normal VIP -->
+      <div class="vip-card">
+        <h3>⭐ VIP PLANS</h3>
+        <div class="days">7 DAYS</div><div class="price">₱50</div>
+        <div class="days">30 DAYS <span class="best">BEST VALUE</span></div><div class="price">₱180</div>
+        <div class="days">90 DAYS</div><div class="price">₱500</div>
+        <button onclick="selectPlan('VIP', '30 Days')">Order VIP</button>
+      </div>
+
+      <!-- KVIP -->
+      <div class="vip-card">
+        <h3>💎 KVIP PLANS</h3>
+        <div class="days">7 DAYS</div><div class="price">₱120</div>
+        <div class="days">30 DAYS <span class="best">BEST VALUE</span></div><div class="price">₱360</div>
+        <div class="days">90 DAYS</div><div class="price">₱1000</div>
+        <button onclick="selectPlan('KVIP', '30 Days')">Order KVIP</button>
+      </div>
+
+      <!-- SVIP -->
+      <div class="vip-card">
+        <h3>🔥 SVIP PLANS</h3>
+        <div class="days">7 DAYS</div><div class="price">₱135</div>
+        <div class="days">30 DAYS <span class="best">BEST VALUE</span></div><div class="price">₱390</div>
+        <div class="days">90 DAYS</div><div class="price">₱1,100</div>
+        <button onclick="selectPlan('SVIP', '30 Days')">Order SVIP</button>
+      </div>
+
+      <!-- XVIP -->
+      <div class="vip-card">
+        <h3>⚡ XVIP PLANS</h3>
+        <div class="days">7 DAYS</div><div class="price">₱315</div>
+        <div class="days">30 DAYS <span class="best">BEST VALUE</span></div><div class="price">₱1,050</div>
+        <button onclick="selectPlan('XVIP', '30 Days')">Order XVIP</button>
+      </div>
+
+    </div>
+
+    <!-- Steps -->
+    <div style="padding: 0 30px 40px;">
+      <div class="step" style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0; border-left:5px solid #3b82f6;">
+        <h3>📲 Step 1: Install Capture Tool (One Time)</h3>
         <a href="https://raw.githubusercontent.com/dazai-ux/redfinger-site/main/redfinger-capture.user.js" target="_blank">
-          <button style="background: #22c55e;">📲 Install Tampermonkey Script</button>
+          <button style="background:#22c55e;">Install Tampermonkey Script</button>
         </a>
-        <small style="display:block; margin-top:10px; color:#94a3b8;">
-          Works on Android (Kiwi/Firefox) & iPhone (Userscripts)
-        </small>
       </div>
 
-      <!-- Step 2 -->
-      <div class="step">
-        <h3><i class="fas fa-sign-in-alt"></i> Step 2: Login to Redfinger</h3>
+      <div class="step" style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0; border-left:5px solid #eab308;">
+        <h3>🔑 Step 2: Login to Redfinger</h3>
         <a href="https://www.cloudemulator.net/" target="_blank">
-          <button style="background: #eab308;">🔑 Open Redfinger & Login with Gmail</button>
+          <button style="background:#eab308;">Open Redfinger & Login with Gmail</button>
         </a>
       </div>
 
-      <!-- Order Form -->
-      <div class="step">
-        <h3><i class="fas fa-cog"></i> Step 3: Place Your Order</h3>
-        
-        <input type="text" id="customer" placeholder="Your Name / Nickname" required>
-        
-        <input type="number" id="days" placeholder="Number of Days (e.g. 2000)" value="2000" required>
-        
-        <select id="vip">
-          <option value="Normal">Normal VIP — 150 gems/hr</option>
-          <option value="KVIP">KVIP — 170 gems/hr</option>
-          <option value="SVIP" selected>SVIP — 300 gems/hr</option>
-          <option value="XVIP">XVIP — 1040 gems/hr</option>
-        </select>
-
-        <button onclick="submitOrder()">
-          <i class="fas fa-rocket"></i> START AUTO CHECK-IN
-        </button>
+      <div class="step" style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0; border-left:5px solid #3b82f6;">
+        <h3>🚀 Step 3: Place Order</h3>
+        <input type="text" id="customer" placeholder="Your Name" style="width:100%; padding:15px; margin:10px 0; background:#334155; border:none; border-radius:10px; color:white;">
+        <button onclick="submitOrder()">PLACE ORDER NOW</button>
       </div>
-
-      <p id="status" class="status"></p>
     </div>
   </div>
 
   <script>
-    async function submitOrder() {
-      const customer = document.getElementById('customer').value.trim();
-      const days = document.getElementById('days').value;
-      const vip = document.getElementById('vip').value;
+    function selectPlan(vip, days) {
+      document.getElementById('status') ? '' : alert(`✅ ${vip} ${days} Selected!`);
+    }
 
-      if (!customer) {
-        alert("Please enter your name");
-        return;
-      }
-
-      const status = document.getElementById('status');
-      status.style.background = "#22c55e";
-      status.style.color = "black";
-      status.innerHTML = `✅ Order Received!<br><strong>${customer}</strong> — ${days} days of ${vip}<br>We'll start processing immediately.`;
-
-      // Optional: Send to Telegram
-      // Replace with your own bot token and chat ID
-      const message = `🆕 New Redfinger Order!\n\n👤 Name: ${customer}\n📅 Days: ${days}\n⭐ VIP: ${vip}`;
-      
-      try {
-        // Add your Telegram bot here later
-      } catch(e) {}
+    function submitOrder() {
+      const name = document.getElementById('customer').value || "Customer";
+      alert(`🎉 Order Received!\n\nCustomer: ${name}\nWe will process your Redfinger Auto Check-in shortly.`);
     }
   </script>
 </body>
