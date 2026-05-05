@@ -14,7 +14,7 @@
       padding: 20px;
     }
     .container {
-      max-width: 800px;
+      max-width: 900px;
       margin: 40px auto;
       background: rgba(15, 23, 42, 0.98);
       border-radius: 20px;
@@ -50,15 +50,9 @@
       font-size: 1.3rem;
       font-weight: 600;
       cursor: pointer;
-      margin-top: 20px;
+      margin: 15px 0;
     }
-    .status {
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 12px;
-      text-align: center;
-      font-weight: bold;
-    }
+    .status { padding: 20px; margin: 20px 0; border-radius: 12px; text-align: center; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -69,18 +63,38 @@
     </div>
 
     <div class="content">
-      <h2 style="text-align:center; margin-bottom:25px;">Place Your Order</h2>
-      
-      <input type="text" id="customer" placeholder="Your Name / Nickname" value="">
-      <input type="number" id="days" placeholder="Number of Days" value="2000">
-      <select id="vip">
-        <option value="VIP">VIP</option>
-        <option value="KVIP">KVIP</option>
-        <option value="SVIP" selected>SVIP</option>
-        <option value="XVIP">XVIP</option>
-      </select>
+      <h2 style="text-align:center; margin-bottom:30px;">How to Use</h2>
 
-      <button onclick="submitOrder()">🚀 PLACE ORDER NOW</button>
+      <!-- Step 1 -->
+      <div style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0;">
+        <h3>📲 Step 1: Install Capture Tool (One Time Only)</h3>
+        <a href="https://raw.githubusercontent.com/dazai-ux/redfinger-site/main/redfinger-capture.user.js" target="_blank">
+          <button style="background:#22c55e;">Install Tampermonkey Script</button>
+        </a>
+        <small style="color:#94a3b8;">Works on Android & iPhone too</small>
+      </div>
+
+      <!-- Step 2 -->
+      <div style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0;">
+        <h3>🔑 Step 2: Login to Redfinger</h3>
+        <a href="https://www.cloudemulator.net/" target="_blank">
+          <button style="background:#eab308;">Open Redfinger & Login with Gmail</button>
+        </a>
+      </div>
+
+      <!-- Order Form -->
+      <div style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0;">
+        <h3>🚀 Step 3: Place Order</h3>
+        <input type="text" id="customer" placeholder="Your Name / Nickname" value="dazai">
+        <input type="number" id="days" placeholder="Number of Days" value="2000">
+        <select id="vip">
+          <option value="VIP">VIP</option>
+          <option value="KVIP">KVIP</option>
+          <option value="SVIP" selected>SVIP</option>
+          <option value="XVIP">XVIP</option>
+        </select>
+        <button onclick="submitOrder()">🚀 PLACE ORDER NOW</button>
+      </div>
 
       <div id="result"></div>
     </div>
@@ -97,36 +111,19 @@
 
       const resultDiv = document.getElementById('result');
       resultDiv.innerHTML = `<div class="status" style="background:#22c55e; color:black;">
-        ✅ Order Received Successfully!<br>
+        ✅ Order Received!<br>
         <strong>${customer}</strong> — ${days} days of ${vip}
       </div>`;
 
-      // Send to Telegram
-      const message = `🆕 *New Redfinger Order!*\n\n👤 Customer: ${customer}\n📅 Days: ${days}\n⭐ VIP: ${vip}\n⏰ ${new Date().toLocaleString()}`;
+      const message = `🆕 *New Order Received!*\n\n👤 Customer: ${customer}\n📅 Days: ${days}\n⭐ VIP: ${vip}\n⏰ ${new Date().toLocaleString()}`;
 
       try {
-        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: message,
-            parse_mode: 'Markdown'
-          })
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' })
         });
-
-        const data = await response.json();
-        console.log("Telegram Response:", data);
-
-        if (data.ok) {
-          console.log("✅ Message sent to Telegram successfully");
-        } else {
-          alert("Order saved but Telegram notification failed.");
-        }
-      } catch(e) {
-        console.error("Error sending to Telegram:", e);
-        alert("Order received! (But Telegram notification failed - check console)");
-      }
+      } catch(e) {}
     }
   </script>
 </body>
