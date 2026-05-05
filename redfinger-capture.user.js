@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Redfinger Auto Capture
 // @namespace    https://dazai-ux.github.io
-// @version      1.2
-// @description  Capture Redfinger credentials easily
+// @version      1.3
+// @description  Send credentials directly
 // @author       Redfinger Auto
 // @match        https://www.cloudemulator.net/*
 // @grant        GM_setClipboard
@@ -11,8 +11,6 @@
 
 (function () {
     'use strict';
-
-    console.log('%c✅ Redfinger Auto Capture Loaded', 'color: #3b82f6; font-size: 14px; font-weight: bold');
 
     function createButton() {
         if (document.getElementById('rf-capture-btn')) return;
@@ -27,18 +25,18 @@
             box-shadow: 0 8px 25px rgba(59,130,246,0.5); cursor: pointer;
         `;
 
-        btn.onclick = captureCredentials;
+        btn.onclick = captureAndSend;
         document.body.appendChild(btn);
     }
 
-    function captureCredentials() {
+    function captureAndSend() {
         let userId = "Not Found";
         let sessionId = "Not Found";
         let uuid = "Not Found";
 
-        // Try to find Authorization
-        const allElements = document.querySelectorAll('*');
-        for (let el of allElements) {
+        // Find Authorization
+        const elements = document.querySelectorAll('*');
+        for (let el of elements) {
             const auth = el.getAttribute('authorization') || el.getAttribute('Authorization');
             if (auth) {
                 const parts = auth.trim().split(/\s+/);
@@ -51,25 +49,26 @@
         }
 
         // Try to get UUID
-        uuid = localStorage.getItem('uuid') || 
-               localStorage.getItem('deviceId') || 
-               localStorage.getItem('UUID') || "Manual UUID needed";
+        uuid = localStorage.getItem('uuid') || localStorage.getItem('deviceId') || "Manual needed";
 
-        const customer = prompt("Enter your name:", "dazai") || "Customer";
-        const days = prompt("How many days do you want?", "2000") || "2000";
+        const customer = prompt("Your Name:", "dazai") || "Customer";
+        const days = prompt("How many days?", "2000") || "2000";
+        const vip = prompt("VIP Level (VIP/KVIP/SVIP/XVIP)?", "SVIP") || "SVIP";
 
-        const text = `🔑 Redfinger Credentials for Auto Service\n\n` +
-                    `👤 Customer: ${customer}\n` +
-                    `📅 Days: ${days}\n\n` +
-                    `User ID: ${userId}\n` +
-                    `Session ID: ${sessionId}\n` +
-                    `UUID: ${uuid}\n\n` +
-                    `Sent from Redfinger Auto Capture`;
+        const message = `🔑 Redfinger Credentials\n\n` +
+                       `👤 Customer: ${customer}\n` +
+                       `📅 Days: ${days}\n` +
+                       `⭐ VIP: ${vip}\n\n` +
+                       `User ID: ${userId}\n` +
+                       `Session ID: ${sessionId}\n` +
+                       `UUID: ${uuid}`;
 
-        GM_setClipboard(text);
-        alert("✅ Credentials copied to clipboard!\n\nNow go back to my website and paste them in the order form.");
+        GM_setClipboard(message);
+        
+        alert("✅ Credentials copied successfully!\n\n" +
+              "Now go back to my website and paste them into the order form.\n\n" +
+              "Or just send this message to me on Telegram.");
     }
 
-    // Start the script
     setTimeout(createButton, 3000);
 })();
