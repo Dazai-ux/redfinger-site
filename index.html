@@ -6,53 +6,14 @@
   <title>Redfinger Auto Check-in</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #0a1428 0%, #1e3a8a 100%);
-      color: #e0f2fe;
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background: rgba(15, 23, 42, 0.98);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
-      border: 1px solid #60a5fa;
-    }
-    .header {
-      background: linear-gradient(90deg, #1e40af, #3b82f6);
-      padding: 40px 20px;
-      text-align: center;
-      color: white;
-    }
+    body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0a1428 0%, #1e3a8a 100%); color: #e0f2fe; min-height: 100vh; padding: 20px; }
+    .container { max-width: 900px; margin: 40px auto; background: rgba(15, 23, 42, 0.98); border-radius: 20px; overflow: hidden; box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); border: 1px solid #60a5fa; }
+    .header { background: linear-gradient(90deg, #1e40af, #3b82f6); padding: 40px 20px; text-align: center; color: white; }
     .header h1 { font-size: 2.6rem; margin: 0; }
     .content { padding: 40px 30px; }
-    input, select {
-      width: 100%;
-      padding: 16px;
-      margin: 12px 0;
-      background: #334155;
-      border: none;
-      border-radius: 12px;
-      color: white;
-      font-size: 1.1rem;
-    }
-    button {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(90deg, #3b82f6, #60a5fa);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 1.3rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin: 15px 0;
-    }
-    .status { padding: 20px; margin: 20px 0; border-radius: 12px; text-align: center; font-weight: bold; }
+    input, select { width: 100%; padding: 16px; margin: 12px 0; background: #334155; border: none; border-radius: 12px; color: white; font-size: 1.1rem; }
+    button { width: 100%; padding: 18px; background: linear-gradient(90deg, #3b82f6, #60a5fa); color: white; border: none; border-radius: 12px; font-size: 1.3rem; font-weight: 600; cursor: pointer; margin: 15px 0; }
+    .step { background:#1e2937; padding:25px; border-radius:16px; margin:20px 0; }
   </style>
 </head>
 <body>
@@ -63,29 +24,27 @@
     </div>
 
     <div class="content">
-      <h2 style="text-align:center; margin-bottom:30px;">How to Use</h2>
+      <h2 style="text-align:center; margin-bottom:30px;">How to Use (Easy Guide)</h2>
 
-      <!-- Step 1 -->
-      <div style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0;">
-        <h3>📲 Step 1: Install Capture Tool (One Time Only)</h3>
+      <div class="step">
+        <h3>📲 Step 1: Install Tampermonkey Script (One Time)</h3>
+        <p><strong>For Android:</strong> Use <b>Kiwi Browser</b> + Tampermonkey</p>
         <a href="https://raw.githubusercontent.com/dazai-ux/redfinger-site/main/redfinger-capture.user.js" target="_blank">
-          <button style="background:#22c55e;">Install Tampermonkey Script</button>
+          <button style="background:#22c55e;">📥 Install Capture Script</button>
         </a>
-        <small style="color:#94a3b8;">Works on Android & iPhone too</small>
+        <small>Long press the button above → "Open in Kiwi Browser" if it just shows code</small>
       </div>
 
-      <!-- Step 2 -->
-      <div style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0;">
+      <div class="step">
         <h3>🔑 Step 2: Login to Redfinger</h3>
         <a href="https://www.cloudemulator.net/" target="_blank">
           <button style="background:#eab308;">Open Redfinger & Login with Gmail</button>
         </a>
       </div>
 
-      <!-- Order Form -->
-      <div style="background:#1e2937; padding:25px; border-radius:16px; margin:20px 0;">
-        <h3>🚀 Step 3: Place Order</h3>
-        <input type="text" id="customer" placeholder="Your Name / Nickname" value="dazai">
+      <div class="step">
+        <h3>🚀 Step 3: Place Your Order</h3>
+        <input type="text" id="customer" placeholder="Your Name" value="dazai">
         <input type="number" id="days" placeholder="Number of Days" value="2000">
         <select id="vip">
           <option value="VIP">VIP</option>
@@ -109,21 +68,11 @@
       const days = document.getElementById('days').value;
       const vip = document.getElementById('vip').value;
 
-      const resultDiv = document.getElementById('result');
-      resultDiv.innerHTML = `<div class="status" style="background:#22c55e; color:black;">
-        ✅ Order Received!<br>
-        <strong>${customer}</strong> — ${days} days of ${vip}
-      </div>`;
-
-      const message = `🆕 *New Order Received!*\n\n👤 Customer: ${customer}\n📅 Days: ${days}\n⭐ VIP: ${vip}\n⏰ ${new Date().toLocaleString()}`;
-
-      try {
-        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-          method: 'POST',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({ chat_id: CHAT_ID, text: message, parse_mode: 'Markdown' })
-        });
-      } catch(e) {}
+      document.getElementById('result').innerHTML = `
+        <div style="background:#22c55e; color:black; padding:20px; border-radius:12px; text-align:center;">
+          ✅ Order Received Successfully!<br>
+          <strong>${customer}</strong> — ${days} days of ${vip}
+        </div>`;
     }
   </script>
 </body>
