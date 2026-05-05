@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Redfinger Auto Capture
 // @namespace    https://dazai-ux.github.io
-// @version      1.5
-// @description  Show credentials for easy copy-paste
+// @version      1.6
+// @description  Copy credentials easily
 // @author       Redfinger Auto
 // @match        https://www.cloudemulator.net/*
 // @grant        GM_setClipboard
@@ -17,7 +17,7 @@
 
         const btn = document.createElement('button');
         btn.id = 'rf-capture-btn';
-        btn.innerHTML = '🚀 SEND CREDENTIALS TO AUTO SERVICE';
+        btn.innerHTML = '📋 COPY INFORMATION';
         btn.style.cssText = `
             position: fixed; bottom: 25px; right: 25px; z-index: 9999999;
             padding: 16px 24px; background: linear-gradient(90deg, #3b82f6, #60a5fa);
@@ -54,15 +54,15 @@
                     `User ID     : ${userId}\n` +
                     `Session ID  : ${sessionId}\n` +
                     `UUID        : ${uuid}\n\n` +
-                    `Copy everything above and paste on my website.`;
+                    `Copy everything above and paste on the website.`;
 
         GM_setClipboard(text);
         
-        alert(`✅ Credentials Captured!\n\n` +
+        alert(`✅ Information Copied!\n\n` +
               `User ID : ${userId}\n` +
               `Session ID : ${sessionId}\n` +
               `UUID : ${uuid}\n\n` +
-              `✅ Copied to clipboard!\n\nPaste them on my website order form.`);
+              `✅ Copied to clipboard!\n\nNow go back to my website and paste these details.`);
     }
 
     setTimeout(createButton, 3000);
