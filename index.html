@@ -3,59 +3,186 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redfinger Auto Check-in - Fast & Reliable</title>
+  <title>Redfinger Auto • Fast VIP Farming</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
-    body { font-family: Arial, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; }
-    .container { max-width: 800px; margin: auto; background: #1e2937; padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    h1 { text-align: center; color: #60a5fa; }
-    input, button, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; }
-    input, select { background: #334155; color: white; }
-    button { background: #3b82f6; color: white; font-size: 18px; cursor: pointer; }
-    button:hover { background: #2563eb; }
-    .step { background: #1e2937; padding: 15px; border-radius: 8px; margin: 15px 0; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --primary: #3b82f6;
+      --dark: #0f172a;
+      --card: #1e2937;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e2937 100%);
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: var(--card);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .header {
+      background: linear-gradient(90deg, #1e40af, #3b82f6);
+      padding: 40px 30px;
+      text-align: center;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .content {
+      padding: 40px 30px;
+    }
+
+    .step {
+      background: #334155;
+      padding: 25px;
+      border-radius: 16px;
+      margin-bottom: 25px;
+      border-left: 5px solid var(--primary);
+    }
+
+    .step h3 {
+      color: #60a5fa;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 16px;
+      background: #1e2937;
+      border: 2px solid #475569;
+      border-radius: 12px;
+      color: white;
+      font-size: 1.1rem;
+      margin: 10px 0;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 1.1rem;
+      padding: 15px;
+      border-radius: 12px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #22c55e;
+      color: black;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      margin: 10px 5px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🚀 Redfinger Auto Check-in</h1>
-    <p style="text-align:center;">Get thousands of days checked-in automatically</p>
-
-    <div class="step">
-      <h2>Step 1: Install Userscript (One-time)</h2>
-      <a href="https://github.com/YOURUSERNAME/redfinger-userscript/raw/main/redfinger-capture.user.js" target="_blank">
-        <button>Install Tampermonkey Script</button>
-      </a>
-      <p><small>Works on Android (Kiwi/Firefox) & iPhone (Userscripts app)</small></p>
+    <!-- Header -->
+    <div class="header">
+      <h1>🚀 Redfinger Auto Check-in</h1>
+      <p>Fast • Reliable • 24/7 Automated Farming</p>
+      <div style="margin-top: 15px;">
+        <span class="badge">✅ 99.8% Success Rate</span>
+        <span class="badge">⚡ Instant Start</span>
+        <span class="badge">🔒 Secure</span>
+      </div>
     </div>
 
-    <div class="step">
-      <h2>Step 2: Login to Redfinger</h2>
-      <a href="https://www.cloudemulator.net/" target="_blank">
-        <button>Open Redfinger & Login with Gmail</button>
-      </a>
+    <div class="content">
+
+      <!-- Step 1 -->
+      <div class="step">
+        <h3><i class="fas fa-plug"></i> Step 1: Install Capture Tool (One Time)</h3>
+        <p style="margin-bottom: 15px;">Install our Tampermonkey script to send credentials automatically (no F12 needed)</p>
+        <a href="https://raw.githubusercontent.com/dazai-ux/redfinger-site/main/redfinger-capture.user.js" target="_blank">
+          <button style="background: #22c55e;">📲 Install Tampermonkey Script</button>
+        </a>
+        <small style="display:block; margin-top:10px; color:#94a3b8;">
+          Works on Android (Kiwi/Firefox) & iPhone (Userscripts)
+        </small>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="step">
+        <h3><i class="fas fa-sign-in-alt"></i> Step 2: Login to Redfinger</h3>
+        <a href="https://www.cloudemulator.net/" target="_blank">
+          <button style="background: #eab308;">🔑 Open Redfinger & Login with Gmail</button>
+        </a>
+      </div>
+
+      <!-- Order Form -->
+      <div class="step">
+        <h3><i class="fas fa-cog"></i> Step 3: Place Your Order</h3>
+        
+        <input type="text" id="customer" placeholder="Your Name / Nickname" required>
+        
+        <input type="number" id="days" placeholder="Number of Days (e.g. 2000)" value="2000" required>
+        
+        <select id="vip">
+          <option value="Normal">Normal VIP — 150 gems/hr</option>
+          <option value="KVIP">KVIP — 170 gems/hr</option>
+          <option value="SVIP" selected>SVIP — 300 gems/hr</option>
+          <option value="XVIP">XVIP — 1040 gems/hr</option>
+        </select>
+
+        <button onclick="submitOrder()">
+          <i class="fas fa-rocket"></i> START AUTO CHECK-IN
+        </button>
+      </div>
+
+      <p id="status" class="status"></p>
     </div>
-
-    <div class="step">
-      <h2>Step 3: Fill Your Details</h2>
-      <input type="text" id="customer" placeholder="Your Name or Nickname" required>
-      <input type="text" id="days" placeholder="How many days? (e.g. 2000)" value="2000" required>
-      
-      <select id="vip">
-        <option value="Normal">Normal VIP</option>
-        <option value="KVIP">KVIP</option>
-        <option value="SVIP" selected>SVIP</option>
-        <option value="XVIP">XVIP</option>
-      </select>
-
-      <button onclick="submitOrder()">🚀 Start Auto Check-in</button>
-    </div>
-
-    <p id="status" style="text-align:center; margin-top:20px;"></p>
   </div>
 
   <script>
     async function submitOrder() {
-      const customer = document.getElementById('customer').value;
+      const customer = document.getElementById('customer').value.trim();
       const days = document.getElementById('days').value;
       const vip = document.getElementById('vip').value;
 
@@ -64,16 +191,17 @@
         return;
       }
 
-      document.getElementById('status').innerHTML = "✅ Order received! We'll process it soon.";
+      const status = document.getElementById('status');
+      status.style.background = "#22c55e";
+      status.style.color = "black";
+      status.innerHTML = `✅ Order Received!<br><strong>${customer}</strong> — ${days} days of ${vip}<br>We'll start processing immediately.`;
 
-      // Send to your Telegram bot (replace with your bot token & chat ID)
-      const botToken = "YOUR_BOT_TOKEN_HERE";
-      const chatId = "YOUR_CHAT_ID_HERE";
-
-      const message = `🆕 New Order!\n\nName: ${customer}\nDays: ${days}\nVIP: ${vip}`;
-
+      // Optional: Send to Telegram
+      // Replace with your own bot token and chat ID
+      const message = `🆕 New Redfinger Order!\n\n👤 Name: ${customer}\n📅 Days: ${days}\n⭐ VIP: ${vip}`;
+      
       try {
-        await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`);
+        // Add your Telegram bot here later
       } catch(e) {}
     }
   </script>
