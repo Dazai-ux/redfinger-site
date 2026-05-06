@@ -84,12 +84,25 @@
     }
     .preview { margin-top: 15px; max-width: 100%; max-height: 300px; border-radius: 12px; display: none; }
     .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 30px 0; }
-    .price-card { background: linear-gradient(145deg, #1e2937, #334155); border-radius: 20px; padding: 25px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: all 0.4s; }
+    .price-card { 
+      background: linear-gradient(145deg, #1e2937, #334155); 
+      border-radius: 20px; 
+      padding: 25px; 
+      text-align: center; 
+      border: 2px solid transparent; 
+      cursor: pointer; 
+      transition: all 0.4s; 
+    }
     .price-card:hover { transform: translateY(-10px); border-color: #60a5fa; }
-    .price-card.active { border-color: #22c55e; box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); transform: scale(1.05); }
+    .price-card.active { 
+      border-color: #22c55e; 
+      box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); 
+      transform: scale(1.05); 
+    }
     .days-options { display: flex; gap: 12px; margin: 15px 0; }
     .day-btn { flex: 1; padding: 14px; background: #334155; border: 2px solid #475569; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 600; }
     .day-btn.active { background: #22c55e; color: black; border-color: #86efac; }
+    .required { color: #ef4444; }
   </style>
 </head>
 <body>
@@ -108,10 +121,10 @@
         <small style="color:#94a3b8; display:block; margin-top:8px;">Get your User ID using the Tampermonkey script on Redfinger</small>
       </div>
 
-      <!-- Price Plans -->
-      <h2 style="text-align:center; margin:40px 0 25px;">💎 Step 2: Choose Your VIP Plan</h2>
+      <!-- Step 2: Choose Plan (Now Required) -->
+      <h2 style="text-align:center; margin:40px 0 25px;">💎 Step 2: Choose Your VIP Plan <span class="required">*</span></h2>
       <div class="price-grid" id="priceGrid">
-        <div class="price-card" data-plan="VIP"><h3>VIP</h3><p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p></div>
+        <div class="price-card active" data-plan="VIP"><h3>VIP</h3><p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p></div>
         <div class="price-card" data-plan="KVIP"><h3>KVIP</h3><p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p></div>
         <div class="price-card" data-plan="SVIP"><h3>SVIP</h3><p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p></div>
         <div class="price-card" data-plan="XVIP"><h3>XVIP</h3><p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p></div>
@@ -121,7 +134,7 @@
       <div class="step">
         <h2 style="text-align:center; margin-bottom:25px;">🛒 Step 3: Place Your Order</h2>
         <input type="text" id="customer" placeholder="Your Name / Telegram Username" required>
-        <select id="vip">
+        <select id="vip" style="display:none;">
           <option value="VIP">VIP</option>
           <option value="KVIP">KVIP</option>
           <option value="SVIP" selected>SVIP</option>
@@ -162,11 +175,11 @@
   </div>
 
   <script>
-    let selectedPlan = "SVIP";
-    let selectedDays = "30";
+    let selectedPlan = "VIP";   // Default changed to first card
+    let selectedDays = "7";
     let selectedFile = null;
 
-    // Price card & days selection
+    // Price card selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -176,6 +189,7 @@
       });
     });
 
+    // Days selection
     document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -201,10 +215,12 @@
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim();
       const userId = document.getElementById('userId').value.trim();
-      const rewardCode = document.getElementById('rewardCode').value.trim();
 
       if (!customer || !userId) {
-        return alert("❌ Please fill User ID and Name");
+        return alert("❌ Please fill in Your Name and User ID");
+      }
+      if (!selectedPlan) {
+        return alert("❌ Please select a VIP Plan in Step 2");
       }
 
       const btn = document.querySelector('button[onclick="submitOrder()"]');
@@ -216,10 +232,10 @@
 
       const msg = `🛒 New Order from Dazai's Store\n\n` +
                   `👤 ${customer}\n` +
-                  `⭐ ${document.getElementById('vip').value} — ${selectedDays} Days\n\n` +
+                  `⭐ ${selectedPlan} — ${selectedDays} Days\n\n` +
                   `🆔 User ID : ${userId}\n` +
-                  `🎟️ Reward Code : ${rewardCode || "None"}\n` +
-                  `📝 Note : ${document.getElementById('note').value || "No note"}`;
+                  `🎟️ Reward Code : ${document.getElementById('rewardCode').value.trim() || "None"}\n` +
+                  `📝 Note : ${document.getElementById('note').value.trim() || "No note"}`;
 
       await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
