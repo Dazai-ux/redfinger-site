@@ -8,9 +8,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
    
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
@@ -59,7 +57,6 @@
       border: 1px solid rgba(100, 150, 255, 0.15);
     }
 
-    /* Input Fields */
     input, textarea, select {
       width: 100%;
       padding: 14px 18px;
@@ -76,14 +73,11 @@
       outline: none;
     }
 
-    /* Reward Code */
     .input-group {
       position: relative;
       margin: 10px 0;
     }
-    .input-group input {
-      padding-right: 50px;
-    }
+    .input-group input { padding-right: 50px; }
     .toggle-eye {
       position: absolute;
       right: 16px;
@@ -94,7 +88,6 @@
       font-size: 1.3rem;
     }
 
-    /* Price Cards */
     .price-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -116,7 +109,6 @@
       box-shadow: 0 0 30px rgba(74, 222, 128, 0.6);
     }
 
-    /* Duration */
     .days-options {
       display: flex;
       gap: 10px;
@@ -160,8 +152,9 @@
       text-align: center;
       cursor: pointer;
       margin: 15px 0;
+      transition: all 0.3s;
     }
-
+    .upload-area:hover { background: rgba(96, 165, 250, 0.1); }
     .preview { margin-top: 15px; max-width: 100%; border-radius: 12px; display: none; }
 
     .required { color: #f87171; }
@@ -179,12 +172,10 @@
       <div class="step">
         <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Enter Your Info</h2>
         <input type="text" id="userId" placeholder="User ID" required>
-        
         <div class="input-group">
           <input type="password" id="rewardCode" placeholder="Reward Code (if any)">
           <i class="toggle-eye fas fa-eye" id="toggleEye"></i>
         </div>
-
         <small style="color:#94a3b8;">Get your User ID using the Tampermonkey script on Redfinger</small>
       </div>
 
@@ -225,28 +216,27 @@
 
         <textarea id="note" placeholder="Additional notes (optional)" rows="3"></textarea>
 
-        <h3 style="margin:25px 0 12px;">📸 Upload Payment Receipt (Optional)</h3>
-        <div class="upload-area" id="uploadArea">
-          <i class="fas fa-cloud-upload-alt" style="font-size: 2.8rem; color: #60a5fa; margin-bottom:12px;"></i>
-          <p>Click or drag to upload receipt</p>
-          <input type="file" id="receipt" accept="image/*" style="display:none;">
-        </div>
-        <img id="preview" class="preview" alt="Receipt Preview">
-        
-        <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
-      </div>
-
-      <!-- Payment -->
-      <div class="step">
-        <h2 style="text-align:center;">💰 Step 4: Payment via GCash</h2>
-        <div style="text-align:center; margin:25px 0;">
-          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 300px; border-radius: 16px;">
+        <!-- Payment via GCash - Moved Up -->
+        <h3 style="margin:25px 0 15px; text-align:center;">💰 Step 4: Payment via GCash</h3>
+        <div style="text-align:center; margin:20px 0;">
+          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 300px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         </div>
         <div style="text-align:center; background: rgba(15,23,42,0.8); padding: 25px; border-radius: 16px;">
           <strong style="font-size:1.65rem; color:#4ade80;">0994 6461 806</strong><br>
           <small style="color:#94a3b8;">(E.R)</small><br><br>
           <small>Send the <strong>exact amount</strong> + your name in the reference</small>
         </div>
+
+        <!-- Upload Receipt - Now Required -->
+        <h3 style="margin:30px 0 12px;">📸 Upload Payment Receipt <span class="required">*</span></h3>
+        <div class="upload-area" id="uploadArea">
+          <i class="fas fa-cloud-upload-alt" style="font-size: 2.8rem; color: #60a5fa; margin-bottom:12px;"></i>
+          <p>Click or drag to upload receipt</p>
+          <input type="file" id="receipt" accept="image/*" style="display:none;" required>
+        </div>
+        <img id="preview" class="preview" alt="Receipt Preview">
+        
+        <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
       </div>
 
       <div id="result"></div>
@@ -258,6 +248,7 @@
     let selectedDays = "7";
     let selectedFile = null;
 
+    // Plan & Duration Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -307,6 +298,7 @@
 
       if (!customer || !userId) return alert("❌ Please fill Name and User ID");
       if (!selectedPlan) return alert("❌ Please select a VIP Plan");
+      if (!selectedFile) return alert("❌ Please upload your Payment Receipt");
 
       const btn = document.querySelector('button[onclick="submitOrder()"]');
       btn.disabled = true;
@@ -315,7 +307,12 @@
       const BOT_TOKEN = "8758270440:AAEdUvBIKpGqhu0CzsLcOV3oQnwRP7c25jI";
       const CHAT_ID = "6598357465";
 
-      const msg = `🛒 New Order from Dazai's Store\n\n👤 ${customer}\n⭐ ${selectedPlan} — ${selectedDays} Days\n\n🆔 User ID : ${userId}\n🎟️ Reward Code : ${document.getElementById('rewardCode').value.trim() || "None"}\n📝 Note : ${document.getElementById('note').value.trim() || "No note"}`;
+      const msg = `🛒 New Order from Dazai's Store\n\n` +
+                  `👤 ${customer}\n` +
+                  `⭐ ${selectedPlan} — ${selectedDays} Days\n\n` +
+                  `🆔 User ID : ${userId}\n` +
+                  `🎟️ Reward Code : ${document.getElementById('rewardCode').value.trim() || "None"}\n` +
+                  `📝 Note : ${document.getElementById('note').value.trim() || "No note"}`;
 
       await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
@@ -330,7 +327,12 @@
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
       }
 
-      document.getElementById('result').innerHTML = `<div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:30px; border-radius:20px; text-align:center; margin-top:20px;">✅ <strong>Order Sent Successfully!</strong><br><br>Thank you, <b>${customer}</b>!</div>`;
+      document.getElementById('result').innerHTML = `
+        <div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:35px; border-radius:20px; text-align:center; margin-top:20px;">
+          ✅ <strong>Order Sent Successfully!</strong><br><br>
+          Thank you, <b>${customer}</b>!<br>We will process it shortly.
+        </div>`;
+
       btn.textContent = '✅ ORDER SENT SUCCESSFULLY';
     }
   </script>
