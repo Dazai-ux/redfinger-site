@@ -10,7 +10,7 @@
    
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background: linear-gradient(135deg, #0a0f1c 0%, #1e2a5e 100%);
+      background: linear-gradient(135deg, #0a0a0f 0%, #1a1f2e 100%);
       color: #e0f2fe;
       min-height: 100vh;
       padding: 20px;
@@ -18,58 +18,69 @@
     .container {
       max-width: 1100px;
       margin: 30px auto;
-      background: rgba(15, 23, 42, 0.94);
+      background: rgba(15, 18, 35, 0.95);
       border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 0 60px rgba(59, 130, 246, 0.5);
-      border: 1px solid rgba(96, 165, 250, 0.3);
+      box-shadow: 0 0 80px rgba(59, 130, 246, 0.3);
+      border: 1px solid rgba(96, 165, 250, 0.2);
     }
     .header {
-      background: linear-gradient(rgba(10, 15, 28, 0.75), rgba(15, 20, 45, 0.85)),
+      background: linear-gradient(rgba(10, 15, 28, 0.85), rgba(15, 20, 45, 0.9)),
                   url('https://i.imgur.com/KhOuujo.jpeg') no-repeat center center;
       background-size: cover;
-      padding: 85px 20px 65px;
+      padding: 80px 20px 60px;
       text-align: center;
+      position: relative;
     }
     .header h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 3.9rem;
-      margin: 0 0 10px 0;
-      text-shadow: 0 0 45px rgba(0,0,0,0.85);
+      font-size: 3.8rem;
+      margin: 0;
+      text-shadow: 0 0 40px rgba(0,0,0,0.9);
       color: white;
     }
     .header p {
-      font-size: 1.5rem;
+      font-size: 1.45rem;
       color: #bae6fd;
-      text-shadow: 0 0 25px rgba(0,0,0,0.8);
+      margin-top: 8px;
+      text-shadow: 0 0 20px rgba(0,0,0,0.8);
     }
-    .content { padding: 50px 40px; }
+
+    .content { padding: 40px; }
     .step {
-      background: rgba(30, 41, 59, 0.9);
-      padding: 30px;
+      background: rgba(20, 25, 45, 0.9);
+      padding: 28px;
       border-radius: 20px;
-      margin: 25px 0;
-      border: 1px solid rgba(96, 165, 250, 0.3);
+      margin-bottom: 35px;
+      border: 1px solid rgba(100, 150, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
+
+    /* Inputs */
     input, textarea, select {
       width: 100%;
       padding: 16px 20px;
-      margin: 12px 0;
-      background: rgba(51, 65, 85, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.4);
+      margin: 10px 0;
+      background: rgba(30, 35, 55, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.3);
       border-radius: 14px;
       color: white;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
+      transition: all 0.3s;
     }
-    textarea { height: 120px; font-family: monospace; resize: vertical; }
+    input:focus, textarea:focus {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+      outline: none;
+    }
 
-    /* Premium Reward Code Field */
+    /* Reward Code Eye */
     .input-group {
       position: relative;
-      margin: 12px 0;
+      margin: 10px 0;
     }
     .input-group input {
-      padding-right: 50px;
+      padding-right: 55px;
     }
     .toggle-eye {
       position: absolute;
@@ -78,11 +89,63 @@
       transform: translateY(-50%);
       color: #94a3b8;
       cursor: pointer;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
+    }
+
+    /* Price Cards */
+    .price-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin: 25px 0;
+    }
+    .price-card {
+      background: linear-gradient(145deg, #1e2538, #2a3449);
+      border-radius: 18px;
+      padding: 22px;
+      text-align: center;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+    .price-card:hover {
+      transform: translateY(-8px);
+      border-color: #60a5fa;
+    }
+    .price-card.active {
+      border-color: #22c55e;
+      box-shadow: 0 0 35px rgba(74, 222, 128, 0.6);
+      transform: scale(1.04);
+    }
+    .price-card h3 {
+      margin: 0 0 12px 0;
+      color: #bae6fd;
+      font-size: 1.4rem;
+    }
+
+    /* Duration Buttons */
+    .days-options {
+      display: flex;
+      gap: 12px;
+      margin: 15px 0 20px;
+    }
+    .day-btn {
+      flex: 1;
+      padding: 16px 12px;
+      background: #1e2538;
+      border: 2px solid #334155;
+      border-radius: 14px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
       transition: all 0.3s;
     }
-    .toggle-eye:hover {
-      color: #bae6fd;
+    .day-btn.active {
+      background: #22c55e;
+      color: black;
+      border-color: #86efac;
+      box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
     }
 
     button {
@@ -92,40 +155,32 @@
       color: black;
       border: none;
       border-radius: 16px;
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       font-weight: 700;
       cursor: pointer;
-      margin: 20px 0;
+      margin: 25px 0 10px;
+      transition: all 0.3s;
     }
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(74, 222, 128, 0.4);
+    }
+
     .upload-area {
       border: 2px dashed #60a5fa;
       border-radius: 16px;
-      padding: 30px;
+      padding: 35px;
       text-align: center;
       cursor: pointer;
       margin: 15px 0;
+      transition: all 0.3s;
     }
-    .preview { margin-top: 15px; max-width: 100%; max-height: 300px; border-radius: 12px; display: none; }
-    .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 30px 0; }
-    .price-card { 
-      background: linear-gradient(145deg, #1e2937, #334155); 
-      border-radius: 20px; 
-      padding: 25px; 
-      text-align: center; 
-      border: 2px solid transparent; 
-      cursor: pointer; 
-      transition: all 0.4s; 
+    .upload-area:hover {
+      background: rgba(96, 165, 250, 0.1);
     }
-    .price-card:hover { transform: translateY(-10px); border-color: #60a5fa; }
-    .price-card.active { 
-      border-color: #22c55e; 
-      box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); 
-      transform: scale(1.05); 
-    }
-    .days-options { display: flex; gap: 12px; margin: 15px 0; }
-    .day-btn { flex: 1; padding: 14px; background: #334155; border: 2px solid #475569; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 600; }
-    .day-btn.active { background: #22c55e; color: black; border-color: #86efac; }
-    .required { color: #ef4444; }
+    .preview { margin-top: 15px; max-width: 100%; max-height: 280px; border-radius: 12px; display: none; }
+
+    .required { color: #f87171; }
   </style>
 </head>
 <body>
@@ -136,7 +191,7 @@
     </div>
     <div class="content">
 
-      <!-- Step 1: User ID & Reward Code -->
+      <!-- Step 1 -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Enter Your Info</h2>
         <input type="text" id="userId" placeholder="User ID" required>
@@ -149,55 +204,67 @@
         <small style="color:#94a3b8; display:block; margin-top:8px;">Get your User ID using the Tampermonkey script on Redfinger</small>
       </div>
 
-      <!-- Step 2: Choose Plan -->
-      <h2 style="text-align:center; margin:40px 0 25px;">💎 Step 2: Choose Your VIP Plan <span class="required">*</span></h2>
-      <div class="price-grid" id="priceGrid">
-        <div class="price-card active" data-plan="VIP"><h3>VIP</h3><p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p></div>
-        <div class="price-card" data-plan="KVIP"><h3>KVIP</h3><p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p></div>
-        <div class="price-card" data-plan="SVIP"><h3>SVIP</h3><p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p></div>
-        <div class="price-card" data-plan="XVIP"><h3>XVIP</h3><p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p></div>
+      <!-- Step 2 -->
+      <div class="step">
+        <h2 style="text-align:center; margin-bottom:25px;">💎 Step 2: Choose Your VIP Plan <span class="required">*</span></h2>
+        <div class="price-grid" id="priceGrid">
+          <div class="price-card active" data-plan="VIP">
+            <h3>VIP</h3>
+            <p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p>
+          </div>
+          <div class="price-card" data-plan="KVIP">
+            <h3>KVIP</h3>
+            <p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p>
+          </div>
+          <div class="price-card" data-plan="SVIP">
+            <h3>SVIP</h3>
+            <p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p>
+          </div>
+          <div class="price-card" data-plan="XVIP">
+            <h3>XVIP</h3>
+            <p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p>
+          </div>
+        </div>
       </div>
 
-      <!-- Step 3: Order -->
+      <!-- Step 3 -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:25px;">🛒 Step 3: Place Your Order</h2>
         <input type="text" id="customer" placeholder="Your Name / Telegram Username" required>
-        <select id="vip" style="display:none;">
-          <option value="VIP">VIP</option>
-          <option value="KVIP">KVIP</option>
-          <option value="SVIP" selected>SVIP</option>
-          <option value="XVIP">XVIP</option>
-        </select>
-        <label style="display:block; margin:15px 0 8px; font-weight:600;">Select Duration:</label>
+        
+        <label style="display:block; margin:18px 0 8px; font-weight:600;">Select Duration:</label>
         <div class="days-options" id="daysOptions">
           <div class="day-btn active" data-days="7">7 Days</div>
           <div class="day-btn" data-days="30">30 Days</div>
           <div class="day-btn" data-days="90">90 Days</div>
         </div>
+
         <textarea id="note" placeholder="Additional notes (optional)"></textarea>
-        <h3 style="margin:20px 0 10px;">📸 Upload Payment Receipt (Optional)</h3>
+
+        <h3 style="margin:25px 0 12px;">📸 Upload Payment Receipt (Optional)</h3>
         <div class="upload-area" id="uploadArea">
-          <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #60a5fa; margin-bottom:10px;"></i>
-          <p>Click to upload receipt</p>
+          <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #60a5fa; margin-bottom:12px;"></i>
+          <p>Click or drag to upload receipt</p>
           <input type="file" id="receipt" accept="image/*" style="display:none;">
         </div>
         <img id="preview" class="preview" alt="Receipt Preview">
+        
         <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
       </div>
 
       <!-- Payment -->
       <div class="step">
         <h2 style="text-align:center;">💰 Step 4: Payment via GCash</h2>
-        <div style="text-align:center; margin:25px 0;">
-          <p style="font-size:1.1rem; margin-bottom:15px;">Scan the QR Code below</p>
-          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 320px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <div style="text-align:center; margin:30px 0 20px;">
+          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 300px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6);">
         </div>
-        <div style="text-align:center; background: rgba(15,23,42,0.8); padding: 20px; border-radius: 16px;">
-          <strong style="font-size:1.6rem; color:#4ade80;">0994 6461 806</strong>
+        <div style="text-align:center; background: rgba(15,23,42,0.8); padding: 25px; border-radius: 16px;">
+          <strong style="font-size:1.7rem; color:#4ade80;">0994 6461 806</strong>
           <small style="color:#94a3b8;">(E.R)</small><br><br>
           <small>Send the <strong>exact amount</strong> + your name in the reference</small>
         </div>
       </div>
+
       <div id="result"></div>
     </div>
   </div>
@@ -207,7 +274,7 @@
     let selectedDays = "7";
     let selectedFile = null;
 
-    // Price & Days Selection
+    // Plan Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -216,6 +283,7 @@
       });
     });
 
+    // Duration Selection
     document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -227,7 +295,6 @@
     // Reward Code Eye Toggle
     const rewardInput = document.getElementById('rewardCode');
     const toggleEye = document.getElementById('toggleEye');
-
     toggleEye.addEventListener('click', () => {
       if (rewardInput.type === "password") {
         rewardInput.type = "text";
@@ -238,7 +305,7 @@
       }
     });
 
-    // Upload handling
+    // File Upload
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('receipt');
     const preview = document.getElementById('preview');
@@ -247,7 +314,10 @@
       if (e.target.files[0]) {
         selectedFile = e.target.files[0];
         const reader = new FileReader();
-        reader.onload = ev => { preview.src = ev.target.result; preview.style.display = 'block'; };
+        reader.onload = ev => {
+          preview.src = ev.target.result;
+          preview.style.display = 'block';
+        };
         reader.readAsDataURL(selectedFile);
       }
     });
@@ -256,16 +326,12 @@
       const customer = document.getElementById('customer').value.trim();
       const userId = document.getElementById('userId').value.trim();
 
-      if (!customer || !userId) {
-        return alert("❌ Please fill in Your Name and User ID");
-      }
-      if (!selectedPlan) {
-        return alert("❌ Please select a VIP Plan in Step 2");
-      }
+      if (!customer || !userId) return alert("❌ Please fill Name and User ID");
+      if (!selectedPlan) return alert("❌ Please select a VIP Plan");
 
       const btn = document.querySelector('button[onclick="submitOrder()"]');
       btn.disabled = true;
-      btn.innerHTML = '⏳ Sending...';
+      btn.innerHTML = '⏳ Sending Order...';
 
       const BOT_TOKEN = "8758270440:AAEdUvBIKpGqhu0CzsLcOV3oQnwRP7c25jI";
       const CHAT_ID = "6598357465";
@@ -280,7 +346,7 @@
       await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'HTML' })
+        body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
       });
 
       if (selectedFile) {
@@ -291,9 +357,10 @@
       }
 
       document.getElementById('result').innerHTML = `
-        <div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:30px; border-radius:16px; text-align:center;">
+        <div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:35px; border-radius:20px; text-align:center; margin-top:20px;">
           ✅ <strong>Order Sent Successfully!</strong><br><br>
-          Thank you, <b>${customer}</b>!
+          Thank you, <b>${customer}</b>!<br>
+          We will process your order shortly.
         </div>`;
 
       btn.innerHTML = '✅ ORDER SENT SUCCESSFULLY';
