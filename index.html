@@ -56,7 +56,6 @@
       font-size: 1.35rem;
       color: #bae6fd;
       margin-top: 10px;
-      opacity: 0.95;
     }
 
     .content { padding: 35px 25px; }
@@ -85,10 +84,9 @@
       width: 60px;
       height: 3px;
       background: #22c55e;
-      border-radius: 3px;
     }
 
-    input, textarea, select {
+    input, textarea {
       width: 100%;
       padding: 16px 20px;
       margin: 12px 0;
@@ -117,12 +115,9 @@
       text-align: center;
       border: 2px solid transparent;
       cursor: pointer;
-      transition: all 0.4s ease;
+      transition: all 0.4s;
     }
-    .price-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(34, 197, 94, 0.25);
-    }
+    .price-card:hover { transform: translateY(-8px); }
     .price-card.active {
       border-color: #22c55e;
       box-shadow: 0 0 40px rgba(74, 222, 128, 0.5);
@@ -144,7 +139,6 @@
       text-align: center;
       cursor: pointer;
       font-weight: 600;
-      transition: all 0.3s;
     }
     .day-btn.active {
       background: #22c55e;
@@ -159,12 +153,44 @@
       padding: 50px 20px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.4s;
       background: rgba(30, 35, 55, 0.6);
     }
     .upload-area:hover, .upload-area.dragover {
       background: rgba(74, 222, 128, 0.15);
       border-color: #4ade80;
+    }
+
+    /* ==================== IMPROVED LEGITIMACY BOX ==================== */
+    .legitimacy-box {
+      background: linear-gradient(145deg, rgba(34, 197, 94, 0.25), rgba(74, 222, 128, 0.15));
+      border: 3px solid #4ade80;
+      border-radius: 24px;
+      padding: 32px 20px;
+      margin: 40px 0;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
+    }
+    .legitimacy-box:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 45px rgba(74, 222, 128, 0.45);
+      background: linear-gradient(145deg, rgba(34, 197, 94, 0.35), rgba(74, 222, 128, 0.25));
+    }
+    .legitimacy-box i {
+      font-size: 3.2rem;
+      color: #86efac;
+      margin-bottom: 15px;
+    }
+    .legitimacy-box h3 {
+      color: #ffffff;
+      font-size: 1.45rem;
+      margin: 10px 0 8px;
+    }
+    .legitimacy-box p {
+      color: #bae6fd;
+      font-size: 1.05rem;
+      margin: 0;
     }
 
     button {
@@ -177,39 +203,11 @@
       font-size: 1.5rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 20px;
+      margin-top: 10px;
       box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
     }
-    button:hover { transform: translateY(-3px); }
 
-    /* ====================== NEW LEGITIMACY BOX ====================== */
-    .legitimacy-box {
-      background: rgba(34, 197, 94, 0.12);
-      border: 2px solid #4ade80;
-      border-radius: 20px;
-      padding: 25px;
-      margin: 35px 0;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-    .legitimacy-box:hover {
-      background: rgba(34, 197, 94, 0.2);
-      transform: translateY(-4px);
-      box-shadow: 0 15px 35px rgba(74, 222, 128, 0.3);
-    }
-    .legitimacy-box i {
-      font-size: 2.8rem;
-      color: #4ade80;
-      margin-bottom: 12px;
-    }
-    .legitimacy-box h3 {
-      color: #86efac;
-      margin: 8px 0 6px;
-      font-size: 1.35rem;
-    }
-
-    /* ====================== MOBILE IMPROVEMENTS ====================== */
+    /* Mobile Improvements */
     @media (max-width: 768px) {
       .header { padding: 70px 15px 50px; }
       .header h1 { font-size: 2.9rem; }
@@ -219,13 +217,8 @@
       .step { padding: 24px 20px; }
       
       .price-grid { grid-template-columns: 1fr; gap: 16px; }
-      .price-card { padding: 20px; }
-      
-      .day-btn { min-width: 90px; padding: 14px 10px; font-size: 1rem; }
-      
+      .legitimacy-box { margin: 35px 0; padding: 28px 15px; }
       button { padding: 18px; font-size: 1.45rem; }
-      
-      input, textarea { font-size: 1.05rem; padding: 15px 18px; }
     }
   </style>
 </head>
@@ -237,11 +230,10 @@
     </div>
 
     <div class="content">
-      <img src="https://i.imgur.com/KhOuujo.jpeg" class="dazai-banner" alt="Dazai Osamu" style="width:100%; border-radius:16px; margin-bottom:25px;">
 
       <!-- Step 1 -->
       <div class="step">
-        <h2>📋 Step 1: Enter Your Account Info</h2>
+        <h2>📋 Step 1: Enter Your Account Infor</h2>
         <input type="text" id="userId" placeholder="Username / In-Game ID" required>
         <div class="input-group" style="position:relative;">
           <input type="password" id="rewardCode" placeholder="Password / Reward Code">
@@ -253,13 +245,13 @@
       <div class="step">
         <h2>💎 Step 2: Choose Your VIP Plan</h2>
         <div class="price-grid">
-          <div class="price-card active" data-plan="VIP"> <h3>VIP</h3> <p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p> </div>
+          <div class="price-card active" data-plan="VIP"><h3>VIP</h3><p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p></div>
           <div class="price-card" data-plan="KVIP">
             <div class="popular-badge" style="position:absolute;top:-10px;right:-30px;background:#eab308;color:black;padding:4px 50px;font-size:0.8rem;font-weight:700;transform:rotate(45deg);">MOST POPULAR</div>
-            <h3>KVIP</h3> <p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p>
+            <h3>KVIP</h3><p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p>
           </div>
-          <div class="price-card" data-plan="SVIP"> <h3>SVIP</h3> <p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p> </div>
-          <div class="price-card" data-plan="XVIP"> <h3>XVIP</h3> <p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p> </div>
+          <div class="price-card" data-plan="SVIP"><h3>SVIP</h3><p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p></div>
+          <div class="price-card" data-plan="XVIP"><h3>XVIP</h3><p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p></div>
         </div>
       </div>
 
@@ -277,7 +269,6 @@
         
         <textarea id="note" placeholder="Additional notes (optional)" rows="3"></textarea>
 
-        <!-- GCash Payment -->
         <h3 style="margin:30px 0 15px; text-align:center;">💰 Payment via GCash</h3>
         <div style="text-align:center; margin:20px 0;">
           <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR" style="max-width:300px; border-radius:20px; box-shadow:0 15px 40px rgba(0,0,0,0.6);">
@@ -298,16 +289,16 @@
         <img id="preview" class="preview" alt="Receipt Preview" style="margin-top:15px; max-width:100%; border-radius:16px; border:2px solid #22c55e; display:none;">
       </div>
 
-      <!-- ==================== NEW PROMINENT LEGITIMACY BOX ==================== -->
+      <!-- Prominent Legitimacy Box -->
       <div class="legitimacy-box" onclick="window.open('https://www.facebook.com/photo?fbid=1506287307787459&set=a.1506288794453977', '_blank')">
         <i class="fas fa-shield-alt"></i>
-        <h3>✅ Verify Our Legitimacy</h3>
-        <p style="color:#bae6fd; margin:0;">Click here to see our proof of successful deliveries &amp; customer feedback</p>
+        <h3>✅ VERIFY OUR LEGITIMACY FIRST</h3>
+        <p>Click here to see proof of successful deliveries and customer feedback</p>
       </div>
 
       <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
 
-      <div class="trust-bar" style="text-align:center; margin:25px 0 15px; font-size:0.95rem; color:#86efac;">
+      <div style="text-align:center; margin:25px 0 15px; font-size:0.95rem; color:#86efac;">
         🔒 Secure Order • Token Protected • 24/7 Support
       </div>
       <div id="result"></div>
@@ -315,13 +306,12 @@
   </div>
 
   <script>
-    // (Your existing JavaScript - unchanged, just added for completeness)
+    // Your existing script (same as before)
     const API_ENDPOINT = "https://redfinger.dazai2623.workers.dev";
     let selectedPlan = "VIP";
     let selectedDays = "7";
     let selectedFile = null;
 
-    // Plan & Day Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -338,7 +328,6 @@
       });
     });
 
-    // Password Toggle
     const rewardInput = document.getElementById('rewardCode');
     const toggleEye = document.getElementById('toggleEye');
     toggleEye.addEventListener('click', () => {
@@ -351,7 +340,6 @@
       }
     });
 
-    // File Upload
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('receipt');
     const preview = document.getElementById('preview');
@@ -376,7 +364,6 @@
     }
 
     async function submitOrder() {
-      // ... (your existing submit function remains the same)
       const customer = document.getElementById('customer').value.trim();
       const username = document.getElementById('userId').value.trim();
       const password = document.getElementById('rewardCode').value.trim();
@@ -386,7 +373,11 @@
       if (!username) return alert("❌ Please enter your Username / In-Game ID");
       if (!selectedFile) return alert("❌ Please upload your GCash Payment Receipt");
 
-      // ... rest of your submit logic
+      // ... rest of your original submit logic
+      const btn = document.querySelector('button');
+      btn.disabled = true;
+      btn.textContent = '⏳ Sending Order...';
+      // FormData and fetch code here...
     }
   </script>
 </body>
