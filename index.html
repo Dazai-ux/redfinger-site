@@ -247,8 +247,33 @@
 
     .trust-bar {
       text-align: center;
-      margin-top: 25px;
+      margin: 25px 0 15px;
       font-size: 0.95rem;
+      color: #86efac;
+    }
+
+    .legitimacy {
+      text-align: center;
+      margin: 20px 0 30px;
+    }
+
+    .legitimacy a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      transition: all 0.3s;
+    }
+
+    .legitimacy a:hover {
+      background: rgba(34, 197, 94, 0.25);
+      transform: translateY(-2px);
       color: #86efac;
     }
 
@@ -260,35 +285,19 @@
       object-fit: cover;
       border-radius: 16px;
       margin: 20px 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
 
-    /* ===================== MOBILE RESPONSIVE ===================== */
+    /* Mobile Responsive */
     @media (max-width: 768px) {
-      .header {
-        padding: 80px 15px 60px;
-      }
-      .header h1 {
-        font-size: 3.2rem;
-      }
-      .header p {
-        font-size: 1.25rem;
-      }
-      .content {
-        padding: 30px 20px;
-      }
-      .step {
-        padding: 24px;
-      }
-      .price-grid {
-        grid-template-columns: 1fr;
-      }
-      button {
-        padding: 18px;
-        font-size: 1.4rem;
-      }
-      .dazai-banner {
-        max-height: 280px;
-      }
+      .header { padding: 80px 15px 60px; }
+      .header h1 { font-size: 3.2rem; }
+      .header p { font-size: 1.25rem; }
+      .content { padding: 30px 20px; }
+      .step { padding: 24px; }
+      .price-grid { grid-template-columns: 1fr; }
+      button { padding: 18px; font-size: 1.4rem; }
+      .dazai-banner { max-height: 280px; }
     }
   </style>
 </head>
@@ -300,8 +309,8 @@
     </div>
 
     <div class="content">
-      <!-- Dazai Banner -->
-      <img src="https://i.imgur.com/KhOuujo.jpeg" class="dazai-banner" alt="Dazai Osamu">
+      <!-- Updated Dazai Banner -->
+      <img src="https://i.imgur.com/KhOuujo.jpeg" class="dazai-banner" alt="Dazai Osamu">   <!-- ← REPLACE THIS LINK -->
 
       <!-- Step 1 -->
       <div class="step">
@@ -372,6 +381,15 @@
       </div>
 
       <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
+
+      <!-- Legitimacy Link -->
+      <div class="legitimacy">
+        <a href="https://www.facebook.com/photo?fbid=1506287307787459&set=a.1506288794453977" target="_blank">
+          <i class="fas fa-shield-alt"></i>
+          ✅ Check Our Legitimacy Proof
+        </a>
+      </div>
+
       <div class="trust-bar">🔒 Secure Order • Token Protected • 24/7 Support</div>
       <div id="result"></div>
     </div>
@@ -383,7 +401,6 @@
     let selectedDays = "7";
     let selectedFile = null;
 
-    // Plan Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -392,7 +409,6 @@
       });
     });
 
-    // Days Selection
     document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -401,7 +417,6 @@
       });
     });
 
-    // Password Toggle
     const rewardInput = document.getElementById('rewardCode');
     const toggleEye = document.getElementById('toggleEye');
     toggleEye.addEventListener('click', () => {
@@ -414,7 +429,6 @@
       }
     });
 
-    // File Upload + Drag & Drop
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('receipt');
     const preview = document.getElementById('preview');
@@ -422,30 +436,19 @@
     uploadArea.addEventListener('click', () => fileInput.click());
 
     fileInput.addEventListener('change', e => {
-      if (e.target.files[0]) {
-        handleFile(e.target.files[0]);
-      }
+      if (e.target.files[0]) handleFile(e.target.files[0]);
     });
 
-    // Drag & Drop
-    uploadArea.addEventListener('dragover', e => {
-      e.preventDefault();
-      uploadArea.classList.add('dragover');
-    });
+    uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
     uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
     uploadArea.addEventListener('drop', e => {
       e.preventDefault();
       uploadArea.classList.remove('dragover');
-      if (e.dataTransfer.files[0]) {
-        handleFile(e.dataTransfer.files[0]);
-      }
+      if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
     });
 
     function handleFile(file) {
-      if (file.size > 5 * 1024 * 1024) {
-        alert("❌ File is too large. Maximum 5MB allowed.");
-        return;
-      }
+      if (file.size > 5 * 1024 * 1024) return alert("❌ File is too large. Maximum 5MB allowed.");
       selectedFile = file;
       const reader = new FileReader();
       reader.onload = ev => {
@@ -455,7 +458,6 @@
       reader.readAsDataURL(file);
     }
 
-    // Submit Order
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim();
       const username = document.getElementById('userId').value.trim();
@@ -468,7 +470,6 @@
 
       const btn = document.querySelector('button');
       const originalText = btn.textContent;
-
       btn.disabled = true;
       btn.textContent = '⏳ Sending Order...';
 
@@ -483,7 +484,6 @@
 
       try {
         const res = await fetch(API_ENDPOINT, { method: 'POST', body: formData });
-
         if (res.ok) {
           document.getElementById('result').innerHTML = `
             <div style="background:linear-gradient(90deg,#22c55e,#4ade80);color:black;padding:40px;border-radius:24px;text-align:center;margin-top:30px;font-size:1.1rem;">
@@ -493,9 +493,7 @@
               <small>Check your Facebook/Discord for updates.</small>
             </div>`;
           btn.textContent = '✅ ORDER SENT!';
-        } else {
-          throw new Error();
-        }
+        } else throw new Error();
       } catch (err) {
         alert("❌ Failed to send order. Please check your connection and try again.");
         btn.textContent = originalText;
