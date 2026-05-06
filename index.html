@@ -8,12 +8,17 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
    
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background: linear-gradient(135deg, #0a0a0f 0%, #1a1f2e 100%);
       color: #e0f2fe;
       min-height: 100vh;
       padding: 20px;
+      margin: 0;
     }
     .container {
       max-width: 1100px;
@@ -30,7 +35,6 @@
       background-size: cover;
       padding: 80px 20px 60px;
       text-align: center;
-      position: relative;
     }
     .header h1 {
       font-family: 'Space Grotesk', sans-serif;
@@ -43,142 +47,122 @@
       font-size: 1.45rem;
       color: #bae6fd;
       margin-top: 8px;
-      text-shadow: 0 0 20px rgba(0,0,0,0.8);
     }
 
-    .content { padding: 40px; }
+    .content { padding: 35px 25px; }
+
     .step {
       background: rgba(20, 25, 45, 0.9);
       padding: 28px;
       border-radius: 20px;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
       border: 1px solid rgba(100, 150, 255, 0.15);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
-    /* Inputs */
+    /* Input Fields */
     input, textarea, select {
       width: 100%;
-      padding: 16px 20px;
+      padding: 14px 18px;
       margin: 10px 0;
       background: rgba(30, 35, 55, 0.95);
       border: 1px solid rgba(148, 163, 184, 0.3);
       border-radius: 14px;
       color: white;
       font-size: 1.05rem;
-      transition: all 0.3s;
     }
     input:focus, textarea:focus {
       border-color: #60a5fa;
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
       outline: none;
     }
 
-    /* Reward Code Eye */
+    /* Reward Code */
     .input-group {
       position: relative;
       margin: 10px 0;
     }
     .input-group input {
-      padding-right: 55px;
+      padding-right: 50px;
     }
     .toggle-eye {
       position: absolute;
-      right: 18px;
+      right: 16px;
       top: 50%;
       transform: translateY(-50%);
       color: #94a3b8;
       cursor: pointer;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
     }
 
     /* Price Cards */
     .price-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
       margin: 25px 0;
     }
     .price-card {
       background: linear-gradient(145deg, #1e2538, #2a3449);
       border-radius: 18px;
-      padding: 22px;
+      padding: 20px;
       text-align: center;
       border: 2px solid transparent;
       cursor: pointer;
-      transition: all 0.4s ease;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      transition: all 0.4s;
     }
-    .price-card:hover {
-      transform: translateY(-8px);
-      border-color: #60a5fa;
-    }
+    .price-card:hover { transform: translateY(-6px); }
     .price-card.active {
       border-color: #22c55e;
-      box-shadow: 0 0 35px rgba(74, 222, 128, 0.6);
-      transform: scale(1.04);
-    }
-    .price-card h3 {
-      margin: 0 0 12px 0;
-      color: #bae6fd;
-      font-size: 1.4rem;
+      box-shadow: 0 0 30px rgba(74, 222, 128, 0.6);
     }
 
-    /* Duration Buttons */
+    /* Duration */
     .days-options {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       margin: 15px 0 20px;
+      flex-wrap: wrap;
     }
     .day-btn {
       flex: 1;
-      padding: 16px 12px;
+      min-width: 100px;
+      padding: 14px 12px;
       background: #1e2538;
       border: 2px solid #334155;
       border-radius: 14px;
       text-align: center;
       cursor: pointer;
       font-weight: 600;
-      transition: all 0.3s;
     }
     .day-btn.active {
       background: #22c55e;
       color: black;
       border-color: #86efac;
-      box-shadow: 0 0 15px rgba(74, 222, 128, 0.5);
     }
 
     button {
       width: 100%;
-      padding: 20px;
+      padding: 18px;
       background: linear-gradient(90deg, #22c55e, #86efac);
       color: black;
       border: none;
       border-radius: 16px;
-      font-size: 1.45rem;
+      font-size: 1.4rem;
       font-weight: 700;
       cursor: pointer;
-      margin: 25px 0 10px;
-      transition: all 0.3s;
-    }
-    button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(74, 222, 128, 0.4);
+      margin-top: 20px;
     }
 
     .upload-area {
       border: 2px dashed #60a5fa;
       border-radius: 16px;
-      padding: 35px;
+      padding: 40px 20px;
       text-align: center;
       cursor: pointer;
       margin: 15px 0;
-      transition: all 0.3s;
     }
-    .upload-area:hover {
-      background: rgba(96, 165, 250, 0.1);
-    }
-    .preview { margin-top: 15px; max-width: 100%; max-height: 280px; border-radius: 12px; display: none; }
+
+    .preview { margin-top: 15px; max-width: 100%; border-radius: 12px; display: none; }
 
     .required { color: #f87171; }
   </style>
@@ -201,13 +185,13 @@
           <i class="toggle-eye fas fa-eye" id="toggleEye"></i>
         </div>
 
-        <small style="color:#94a3b8; display:block; margin-top:8px;">Get your User ID using the Tampermonkey script on Redfinger</small>
+        <small style="color:#94a3b8;">Get your User ID using the Tampermonkey script on Redfinger</small>
       </div>
 
       <!-- Step 2 -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:25px;">💎 Step 2: Choose Your VIP Plan <span class="required">*</span></h2>
-        <div class="price-grid" id="priceGrid">
+        <div class="price-grid">
           <div class="price-card active" data-plan="VIP">
             <h3>VIP</h3>
             <p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p>
@@ -233,17 +217,17 @@
         <input type="text" id="customer" placeholder="Your Name / Telegram Username" required>
         
         <label style="display:block; margin:18px 0 8px; font-weight:600;">Select Duration:</label>
-        <div class="days-options" id="daysOptions">
+        <div class="days-options">
           <div class="day-btn active" data-days="7">7 Days</div>
           <div class="day-btn" data-days="30">30 Days</div>
           <div class="day-btn" data-days="90">90 Days</div>
         </div>
 
-        <textarea id="note" placeholder="Additional notes (optional)"></textarea>
+        <textarea id="note" placeholder="Additional notes (optional)" rows="3"></textarea>
 
         <h3 style="margin:25px 0 12px;">📸 Upload Payment Receipt (Optional)</h3>
         <div class="upload-area" id="uploadArea">
-          <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #60a5fa; margin-bottom:12px;"></i>
+          <i class="fas fa-cloud-upload-alt" style="font-size: 2.8rem; color: #60a5fa; margin-bottom:12px;"></i>
           <p>Click or drag to upload receipt</p>
           <input type="file" id="receipt" accept="image/*" style="display:none;">
         </div>
@@ -255,11 +239,11 @@
       <!-- Payment -->
       <div class="step">
         <h2 style="text-align:center;">💰 Step 4: Payment via GCash</h2>
-        <div style="text-align:center; margin:30px 0 20px;">
-          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 300px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.6);">
+        <div style="text-align:center; margin:25px 0;">
+          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 300px; border-radius: 16px;">
         </div>
         <div style="text-align:center; background: rgba(15,23,42,0.8); padding: 25px; border-radius: 16px;">
-          <strong style="font-size:1.7rem; color:#4ade80;">0994 6461 806</strong>
+          <strong style="font-size:1.65rem; color:#4ade80;">0994 6461 806</strong><br>
           <small style="color:#94a3b8;">(E.R)</small><br><br>
           <small>Send the <strong>exact amount</strong> + your name in the reference</small>
         </div>
@@ -274,7 +258,6 @@
     let selectedDays = "7";
     let selectedFile = null;
 
-    // Plan Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -283,7 +266,6 @@
       });
     });
 
-    // Duration Selection
     document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -292,7 +274,7 @@
       });
     });
 
-    // Reward Code Eye Toggle
+    // Eye Toggle
     const rewardInput = document.getElementById('rewardCode');
     const toggleEye = document.getElementById('toggleEye');
     toggleEye.addEventListener('click', () => {
@@ -305,7 +287,7 @@
       }
     });
 
-    // File Upload
+    // Upload
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('receipt');
     const preview = document.getElementById('preview');
@@ -314,10 +296,7 @@
       if (e.target.files[0]) {
         selectedFile = e.target.files[0];
         const reader = new FileReader();
-        reader.onload = ev => {
-          preview.src = ev.target.result;
-          preview.style.display = 'block';
-        };
+        reader.onload = ev => { preview.src = ev.target.result; preview.style.display = 'block'; };
         reader.readAsDataURL(selectedFile);
       }
     });
@@ -331,17 +310,12 @@
 
       const btn = document.querySelector('button[onclick="submitOrder()"]');
       btn.disabled = true;
-      btn.innerHTML = '⏳ Sending Order...';
+      btn.textContent = '⏳ Sending...';
 
       const BOT_TOKEN = "8758270440:AAEdUvBIKpGqhu0CzsLcOV3oQnwRP7c25jI";
       const CHAT_ID = "6598357465";
 
-      const msg = `🛒 New Order from Dazai's Store\n\n` +
-                  `👤 ${customer}\n` +
-                  `⭐ ${selectedPlan} — ${selectedDays} Days\n\n` +
-                  `🆔 User ID : ${userId}\n` +
-                  `🎟️ Reward Code : ${document.getElementById('rewardCode').value.trim() || "None"}\n` +
-                  `📝 Note : ${document.getElementById('note').value.trim() || "No note"}`;
+      const msg = `🛒 New Order from Dazai's Store\n\n👤 ${customer}\n⭐ ${selectedPlan} — ${selectedDays} Days\n\n🆔 User ID : ${userId}\n🎟️ Reward Code : ${document.getElementById('rewardCode').value.trim() || "None"}\n📝 Note : ${document.getElementById('note').value.trim() || "No note"}`;
 
       await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
@@ -356,14 +330,8 @@
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
       }
 
-      document.getElementById('result').innerHTML = `
-        <div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:35px; border-radius:20px; text-align:center; margin-top:20px;">
-          ✅ <strong>Order Sent Successfully!</strong><br><br>
-          Thank you, <b>${customer}</b>!<br>
-          We will process your order shortly.
-        </div>`;
-
-      btn.innerHTML = '✅ ORDER SENT SUCCESSFULLY';
+      document.getElementById('result').innerHTML = `<div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:30px; border-radius:20px; text-align:center; margin-top:20px;">✅ <strong>Order Sent Successfully!</strong><br><br>Thank you, <b>${customer}</b>!</div>`;
+      btn.textContent = '✅ ORDER SENT SUCCESSFULLY';
     }
   </script>
 </body>
