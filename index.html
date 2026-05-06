@@ -62,6 +62,29 @@
       font-size: 1.1rem;
     }
     textarea { height: 120px; font-family: monospace; resize: vertical; }
+
+    /* Premium Reward Code Field */
+    .input-group {
+      position: relative;
+      margin: 12px 0;
+    }
+    .input-group input {
+      padding-right: 50px;
+    }
+    .toggle-eye {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 1.3rem;
+      transition: all 0.3s;
+    }
+    .toggle-eye:hover {
+      color: #bae6fd;
+    }
+
     button {
       width: 100%;
       padding: 20px;
@@ -117,11 +140,16 @@
       <div class="step">
         <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Enter Your Info</h2>
         <input type="text" id="userId" placeholder="User ID" required>
-        <input type="text" id="rewardCode" placeholder="Reward Code (if any)">
+        
+        <div class="input-group">
+          <input type="password" id="rewardCode" placeholder="Reward Code (if any)">
+          <i class="toggle-eye fas fa-eye" id="toggleEye"></i>
+        </div>
+
         <small style="color:#94a3b8; display:block; margin-top:8px;">Get your User ID using the Tampermonkey script on Redfinger</small>
       </div>
 
-      <!-- Step 2: Choose Plan (Now Required) -->
+      <!-- Step 2: Choose Plan -->
       <h2 style="text-align:center; margin:40px 0 25px;">💎 Step 2: Choose Your VIP Plan <span class="required">*</span></h2>
       <div class="price-grid" id="priceGrid">
         <div class="price-card active" data-plan="VIP"><h3>VIP</h3><p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p></div>
@@ -175,27 +203,39 @@
   </div>
 
   <script>
-    let selectedPlan = "VIP";   // Default changed to first card
+    let selectedPlan = "VIP";
     let selectedDays = "7";
     let selectedFile = null;
 
-    // Price card selection
+    // Price & Days Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
         card.classList.add('active');
         selectedPlan = card.getAttribute('data-plan');
-        document.getElementById('vip').value = selectedPlan;
       });
     });
 
-    // Days selection
     document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         selectedDays = btn.getAttribute('data-days');
       });
+    });
+
+    // Reward Code Eye Toggle
+    const rewardInput = document.getElementById('rewardCode');
+    const toggleEye = document.getElementById('toggleEye');
+
+    toggleEye.addEventListener('click', () => {
+      if (rewardInput.type === "password") {
+        rewardInput.type = "text";
+        toggleEye.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        rewardInput.type = "password";
+        toggleEye.classList.replace('fa-eye-slash', 'fa-eye');
+      }
     });
 
     // Upload handling
