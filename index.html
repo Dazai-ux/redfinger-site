@@ -208,6 +208,15 @@
       color: #86efac;
     }
     .required { color: #f87171; }
+
+    /* Extra Dazai Image Style */
+    .dazai-banner {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin: 20px 0;
+    }
   </style>
 </head>
 <body>
@@ -216,8 +225,12 @@
       <h1>DAZAI'S STORE</h1>
       <p>AFFORDABLE RED FINGER SAPPHIRES • 24/7 Automated Delivery</p>
     </div>
+
     <div class="content">
-      <!-- Step 1: Account Credentials -->
+      <!-- Dazai Banner -->
+      <img src="https://i.imgur.com/KhOuujo.jpeg" class="dazai-banner" alt="Dazai Osamu">
+
+      <!-- Step 1 -->
       <div class="step">
         <h2>📋 Step 1: Enter Your Account Info</h2>
         <input type="text" id="userId" placeholder="Username / In-Game ID" required>
@@ -227,30 +240,164 @@
         </div>
       </div>
 
-      <!-- Step 2: VIP Plan -->
+      <!-- Step 2 -->
       <div class="step">
         <h2>💎 Step 2: Choose Your VIP Plan</h2>
         <div class="price-grid">
           <div class="price-card active" data-plan="VIP">
             <h3>VIP</h3>
-            <p><strong>7 Days</strong> — ₱50<br>
-               <strong>30 Days</strong> — ₱180<br>
-               <strong>90 Days</strong> — ₱500</p>
+            <p><strong>7 Days</strong> — ₱50<br><strong>30 Days</strong> — ₱180<br><strong>90 Days</strong> — ₱500</p>
           </div>
           <div class="price-card" data-plan="KVIP">
             <div class="popular-badge">MOST POPULAR</div>
             <h3>KVIP</h3>
-            <p><strong>7 Days</strong> — ₱120<br>
-               <strong>30 Days</strong> — ₱360<br>
-               <strong>90 Days</strong> — ₱1,000</p>
+            <p><strong>7 Days</strong> — ₱120<br><strong>30 Days</strong> — ₱360<br><strong>90 Days</strong> — ₱1,000</p>
           </div>
           <div class="price-card" data-plan="SVIP">
             <h3>SVIP</h3>
-            <p><strong>7 Days</strong> — ₱135<br>
-               <strong>30 Days</strong> — ₱390<br>
-               <strong>90 Days</strong> — ₱1,100</p>
+            <p><strong>7 Days</strong> — ₱135<br><strong>30 Days</strong> — ₱390<br><strong>90 Days</strong> — ₱1,100</p>
           </div>
           <div class="price-card" data-plan="XVIP">
             <h3>XVIP</h3>
-            <p><strong>7 Days</strong> — ₱315<br>
-               <strong>30 Days</strong> — ₱1,
+            <p><strong>7 Days</strong> — ₱315<br><strong>30 Days</strong> — ₱1,050</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="step">
+        <h2>🛒 Step 3: Place Your Order</h2>
+        <input type="text" id="customer" placeholder="Your Facebook Name" required>
+       
+        <label style="display:block; margin:20px 0 10px; font-weight:600;">Select Duration:</label>
+        <div class="days-options">
+          <div class="day-btn active" data-days="7">7 Days</div>
+          <div class="day-btn" data-days="30">30 Days</div>
+          <div class="day-btn" data-days="90">90 Days</div>
+        </div>
+        <textarea id="note" placeholder="Additional notes (optional)" rows="3"></textarea>
+
+        <h3 style="margin:30px 0 15px; text-align:center;">💰 Payment via GCash</h3>
+        <div style="text-align:center; margin:25px 0;">
+          <img src="https://i.imgur.com/SnIB5Dt.jpeg" alt="GCash QR" style="max-width:320px; border-radius:20px; box-shadow:0 15px 40px rgba(0,0,0,0.6);">
+        </div>
+        <div style="text-align:center; background:rgba(15,23,42,0.9); padding:28px; border-radius:20px;">
+          <strong style="font-size:1.8rem;color:#4ade80;">0994 6461 806</strong><br>
+          <small style="color:#94a3b8;">(E.R)</small><br><br>
+          <small>Send the <strong>exact amount</strong> + your name in reference</small>
+        </div>
+
+        <h3 style="margin:35px 0 15px;">📸 Upload Payment Receipt <span class="required">*</span></h3>
+        <div class="upload-area" id="uploadArea">
+          <i class="fas fa-cloud-upload-alt" style="font-size:3.2rem;color:#60a5fa;margin-bottom:15px;"></i>
+          <p>Click or drag receipt here</p>
+          <small>PNG, JPG • Max 5MB</small>
+          <input type="file" id="receipt" accept="image/*" style="display:none;">
+        </div>
+        <img id="preview" class="preview" alt="Preview">
+      </div>
+
+      <button onclick="submitOrder()">🚀 CONFIRM ORDER & SEND TO SELLER</button>
+      <div class="trust-bar">🔒 Secure Order • Token Protected • 24/7 Support</div>
+      <div id="result"></div>
+    </div>
+  </div>
+
+  <script>
+    const API_ENDPOINT = "https://redfinger.dazai2623.workers.dev";
+
+    let selectedPlan = "VIP";
+    let selectedDays = "7";
+    let selectedFile = null;
+
+    // Plan & Days Logic
+    document.querySelectorAll('.price-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        selectedPlan = card.getAttribute('data-plan');
+      });
+    });
+
+    document.querySelectorAll('.day-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.day-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedDays = btn.getAttribute('data-days');
+      });
+    });
+
+    // Password toggle
+    const rewardInput = document.getElementById('rewardCode');
+    const toggleEye = document.getElementById('toggleEye');
+    toggleEye.addEventListener('click', () => {
+      if (rewardInput.type === "password") {
+        rewardInput.type = "text";
+        toggleEye.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        rewardInput.type = "password";
+        toggleEye.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    });
+
+    // File Upload
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('receipt');
+    const preview = document.getElementById('preview');
+
+    uploadArea.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => {
+      if (e.target.files[0]) {
+        selectedFile = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = ev => {
+          preview.src = ev.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(selectedFile);
+      }
+    });
+
+    async function submitOrder() {
+      const customer = document.getElementById('customer').value.trim();
+      const username = document.getElementById('userId').value.trim();
+      const password = document.getElementById('rewardCode').value.trim();
+      const note = document.getElementById('note').value.trim();
+
+      if (!customer || !username) return alert("❌ Please fill Facebook Name and Username");
+      if (!selectedFile) return alert("❌ Please upload Payment Receipt");
+
+      const btn = document.querySelector('button');
+      btn.disabled = true;
+      btn.textContent = '⏳ Sending Order...';
+
+      const formData = new FormData();
+      formData.append('customer', customer);
+      formData.append('username', username);
+      formData.append('plan', selectedPlan);
+      formData.append('days', selectedDays);
+      formData.append('password', password || 'None');
+      formData.append('note', note || 'No note');
+      formData.append('receipt', selectedFile);
+
+      try {
+        const res = await fetch(API_ENDPOINT, { method: 'POST', body: formData });
+        if (res.ok) {
+          document.getElementById('result').innerHTML = `
+            <div style="background:linear-gradient(90deg,#22c55e,#4ade80);color:black;padding:40px;border-radius:24px;text-align:center;margin-top:30px;">
+              ✅ <strong>Order Sent Successfully!</strong><br><br>
+              Thank you, <b>${customer}</b>!<br>We will process your order shortly.
+            </div>`;
+          btn.textContent = '✅ ORDER SENT SUCCESSFULLY';
+        } else {
+          alert("❌ Failed to send order.");
+        }
+      } catch (err) {
+        alert("❌ Connection error. Please try again.");
+      } finally {
+        btn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>
